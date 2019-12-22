@@ -9,6 +9,9 @@ import java.sql.SQLException;
 
 public class DBAdminInfo {
 
+    /*
+    管理员自己修改自己密码
+     */
     public static Boolean changeAdminTel(String adminId, String adminTel){
         Connection connection = DBUtil.getConnection();
         PreparedStatement preparedStatement = null;
@@ -29,6 +32,9 @@ public class DBAdminInfo {
         return true;
     }
 
+    /*
+    查询管理员信息
+     */
     public static admin queryAdmin(String adminId){
         Connection connection = DBUtil.getConnection();
         PreparedStatement preparedStatement = null;
