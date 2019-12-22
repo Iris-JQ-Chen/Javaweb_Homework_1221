@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>宿管员</title>
+    <title>宿管员首页</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
@@ -40,7 +40,7 @@
         </div><!-- navbar-header -->
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="HomeAdmin.jsp">主页</a></li>
+                <li class="active"><a href="http://localhost:8080/Login">退出登录</a></li>
                 <li><a href="#">页面2</a></li>
                 <li><a href="#">页面3</a></li>
             </ul><!-- nav navbar-nav -->

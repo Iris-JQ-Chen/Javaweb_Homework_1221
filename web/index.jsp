@@ -7,15 +7,48 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    String msg = (String) session.getAttribute("msg");
-    if ("".equals(msg) || msg == null){
-    } else if ("登录失败".equals(msg)){
+    Boolean isLogin = false;
+    String userName = null;
+    String userLimit = null;
+    Cookie[] cookies = request.getCookies();
+    if (cookies != null){
+        for (Cookie cookie: cookies){
+            if ("name".equals(cookie.getName())){
+                if (!"".equals(cookie.getValue())){
+                    isLogin = true;
+                    userName = cookie.getValue();
+                }
+            } else if ("limit".equals(cookie.getName())){
+                userLimit = cookie.getValue();
+            }
+        }
+    }
+
+    if (isLogin){   //已经登录成功
         %>
         <script type="text/javascript">
-            alert("登录失败\n请重试");
+            alert(<%=userName+"您好"%>);
         </script>
+        <%
+        if (userLimit.equals("1")) {
+            response.sendRedirect(request.getContextPath()+"/HomeAdmin.jsp");
+        } else if (userLimit.equals("2")){
+            response.sendRedirect(request.getContextPath()+"/HomeDManager.jsp");
+        } else if (userLimit.equals("3")){
+            response.sendRedirect(request.getContextPath()+"/HomeStudent.jsp");
+        }
+    } else {        //还未登录
+        String msg = (String) session.getAttribute("msg");
+        if ("".equals(msg) || msg == null){
+        } else if ("登录失败".equals(msg)) {
+            %>
+            <script type="text/javascript">
+                alert("登录失败");
+            </script>
 <%
+        }
     }
+
 %>
 <html>
 <head>
@@ -52,7 +85,7 @@
 </head>
 <body>
 <div class="modal-dialog" style="margin-top: 10%">
-    <form action="/Login" method="get">
+    <form action="/Login" method="post">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title text-center" >学生管理系统登录</h4>
