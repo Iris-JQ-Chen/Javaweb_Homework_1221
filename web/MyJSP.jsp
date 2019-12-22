@@ -6,15 +6,23 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="MyServlet.*" %>
+<%
+    String msg = (String)session.getAttribute("msg");
+    if ("".equals(msg) && msg == null){
+    } else {
+        %>
+        <script type="text/javascript">
+            alert("<%=msg%>");
+        </script>
+<%
+    }
+%>
 <html>
 <head>
     <title>Title</title>
 </head>
 <body>
-<%
-    new Servlet_01();
-%>
+
 
     <form action="index.jsp">
         <input type="text" value="Value" name="Name">
