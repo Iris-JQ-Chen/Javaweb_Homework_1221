@@ -16,7 +16,7 @@
     <script>
         $(document).ready(function(){
             $("button").click(function(){
-                $.post("http://localhost:8080/change",{
+                $.post("http://localhost:8080/ChangePwd",{
                         name:"dfjlsdkflaskdjflak",
                         url:"http://www.runoob.com"
                     },

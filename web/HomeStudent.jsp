@@ -25,17 +25,14 @@
         $(function () {
             $("#changePassword").click(
                 function () {
-                    var newPassword = window.prompt("请输入新密码","");
-                    // window.location.href = "http://localhost:8080/changePwd?newPassword="+newPassword;
-                    $.post(
-                        "http://localhost:8080/changePwd",
+                    var newPwd = window.prompt("请输入新密码","");
+                    $.post("http://localhost:8080/ChangePwd",
                         {
-                            newPasswrod:"fjlsdkfjsld"
+                            pp:newPwd.toString(),
                         },
-                        function (data,status) {
-                            alert("数据:"+data+"\n状态:"+status)
-                        }
-                    );
+                        function(data,status){
+                            alert("数据: \n" + data + "\n状态: " + status);
+                        });
                 }
             );
         })

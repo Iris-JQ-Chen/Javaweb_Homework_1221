@@ -11,6 +11,7 @@
     <title>管理员首页</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="jQuery/jquery-3.4.1.js"></script>
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
@@ -20,6 +21,22 @@
             background: #aaa;
         }
     </style>
+    <script type="text/javascript">
+        $(function () {
+            $("#changePassword").click(
+                function () {
+                    var newPwd = window.prompt("请输入新密码","");
+                    $.post("http://localhost:8080/ChangePwd",
+                        {
+                            pp:newPwd.toString(),
+                        },
+                        function(data,status){
+                            alert("数据: \n" + data);
+                        });
+                }
+            );
+        })
+    </script>
 </head>
 <body>
 
@@ -58,9 +75,11 @@
             <h3>链接</h3>
             <p>描述文本 打开附近拉斯柯达就发了啥快递费金老师的 拉达克福建省来得快</p>
             <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a href="#">链接 1</a></li>
-                <li><a href="#">链接 2</a></li>
-                <li><a href="#">链接 3</a></li>
+                <li><button type="button" id="changePassword" class="btn btn-primary btn-lg btn-block">修改密码</button></li>
+                <br>
+                <li><button type="button" class="btn btn-primary btn-lg btn-block">按钮1</button></li>
+                <br>
+                <li><button type="button" class="btn btn-primary btn-lg btn-block">按钮2</button></li>
             </ul><!-- nav nav-pills nav-stacked -->
             <hr class="hidden-sm hidden-md hidden-lg">
         </div><!-- col-sm-4 -->
