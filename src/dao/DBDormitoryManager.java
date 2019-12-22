@@ -11,6 +11,9 @@ import java.util.List;
 
 public class DBDormitoryManager {
 
+    /*
+    修改某NO的宿管员的关联楼编号
+     */
     public static final Boolean changeBuildingNoByManagerNo(String managerNo, String buildingNo){
         Connection connection = DBUtil.getConnection();
         PreparedStatement preparedStatement = null;
@@ -32,6 +35,9 @@ public class DBDormitoryManager {
 
     }
 
+    /*
+    修改某NO的管理员的相关手机号
+     */
     public static final Boolean changeManagerTelByManagerNo(String managerNo, String managerTel){
         Connection connection = DBUtil.getConnection();
         PreparedStatement preparedStatement = null;
@@ -52,6 +58,9 @@ public class DBDormitoryManager {
         return true;
     }
 
+    /*
+    获得所有宿管员的所有相关信息
+     */
     public static final List<dormitoryManager> queryDormitoryManagerAll(){
         Connection connection = DBUtil.getConnection();
         PreparedStatement preparedStatement = null;
@@ -79,6 +88,9 @@ public class DBDormitoryManager {
         return dormitoryManagerList;
     }
 
+    /*
+    查询某个NO的宿管员的所有信息
+     */
     public static final dormitoryManager queryDormitoryManagerByManagerNo(String  managerNo){
         Connection connection = DBUtil.getConnection();
         PreparedStatement preparedStatement = null;

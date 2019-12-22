@@ -11,11 +11,17 @@ import java.util.List;
 
 public class DBHygieneRecord {
 
+    /*
+    根据宿舍号NO查询某个宿舍的所有卫生记录
+     */
     public static final List<hygieneRecord> queryByDormitoryNo(String dormitoryNo){
         String sql = "select * from hygieneRecord where dormitoryNo = ?";
         return queryByPara(sql,dormitoryNo);
     }
 
+    /*
+    根据日期查询当天所有的卫生记录
+     */
     public static final List<hygieneRecord> queryByRecordDate(String recordDate){
         String sql = "select * from hygieneRecord where recordDate = ?";
         return queryByPara(sql,recordDate);

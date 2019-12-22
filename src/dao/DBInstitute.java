@@ -11,6 +11,9 @@ import java.util.List;
 
 public class DBInstitute {
 
+    /*
+    根据学院编号NO修改辅导员手机号
+     */
     public static final Boolean changeCoachTel(int instituteNo, String coachTel){
         Connection connection = DBUtil.getConnection();
         PreparedStatement preparedStatement = null;
@@ -31,6 +34,9 @@ public class DBInstitute {
         return true;
     }
 
+    /*
+    根据学院编号NO修改辅导员和辅导员手机号
+     */
     public static final Boolean changeCoachAndCoachTel(int instituteNo, String coach, String coachTel){
         Connection connection = DBUtil.getConnection();
         PreparedStatement preparedStatement = null;
@@ -52,6 +58,9 @@ public class DBInstitute {
         return true;
     }
 
+    /*
+    查询所有学院的所有相关信息
+     */
     public static final List<institute> queryInstituteAll(){
         Connection connection = DBUtil.getConnection();
         PreparedStatement preparedStatement = null;
@@ -80,25 +89,34 @@ public class DBInstitute {
         return instituteList;
     }
 
+    /*
+    根据学院编号NO查询某个学院的所有相关信息
+     */
     public static final institute queryInstituteByInstituteNo(int instituteNo){
         String sql = "select * from institute where instituteNo = ?";
         return queryInstitute(sql,instituteNo);
     }
 
+    /*
+    根据学院名查询某个学院的所有相关信息
+     */
     public static final institute queryInstituteByInstituteName(String instituteName){
         String sql = "select * from institute where instituteName = ?";
         return queryInstitute(sql,instituteName);
     }
 
+    /*
+    根据导师姓名查询某个学院的所有相关信息
+     */
     public static final institute queryInstituteByCoach(String coach){
         String sql = "select * from institute where coach = ?";
         return queryInstitute(sql,coach);
     }
 
-    public static final institute queryInstituteByCoachTel(String coachTel){
-        String sql = "select * from institute where coachTel = ?";
-        return queryInstitute(sql,coachTel);
-    }
+//    public static final institute queryInstituteByCoachTel(String coachTel){
+//        String sql = "select * from institute where coachTel = ?";
+//        return queryInstitute(sql,coachTel);
+//    }
 
     private static final institute queryInstitute(String sql, int para){
         Connection connection = DBUtil.getConnection();

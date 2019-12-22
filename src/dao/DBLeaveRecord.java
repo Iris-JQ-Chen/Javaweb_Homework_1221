@@ -11,6 +11,9 @@ import java.util.List;
 
 public class DBLeaveRecord {
 
+    /*
+    根据学生编号NO查询这个学生的所有离校记录
+     */
     public static final List<leaveRecord> queryLeaveRecordByStudentNo(String studentNo){
         Connection connection = DBUtil.getConnection();
         PreparedStatement preparedStatement = null;

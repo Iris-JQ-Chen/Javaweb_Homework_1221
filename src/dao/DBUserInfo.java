@@ -9,6 +9,9 @@ import java.sql.SQLException;
 
 public class DBUserInfo {
 
+    /*
+    用户实现登录
+     */
     public static Boolean userLogin(String userId, String userPassword, String limit){
         String sql = "select * from UserInfo where userId = ? and password = ? and limit = ?";
         Connection connection = DBUtil.getConnection();
@@ -34,6 +37,9 @@ public class DBUserInfo {
         }
     }
 
+    /*
+    通过用户id和limit查询用户密码
+     */
     public static user queryUserInfo(String userId, String limit){
         String sql = "select * from UserInfo where userId = ? and limit = ?";
         Connection connection = DBUtil.getConnection();
@@ -61,6 +67,9 @@ public class DBUserInfo {
         return user;
     }
 
+    /*
+    用户修改密码
+     */
     public static Boolean changeUserPassword(String userId, String password, String limit){
         String sql = "update UserInfo set password = ? where userId = ? and limit = ?";
         Connection connection = DBUtil.getConnection();

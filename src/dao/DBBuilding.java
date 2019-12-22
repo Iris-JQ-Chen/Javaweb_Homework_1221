@@ -11,6 +11,9 @@ import java.util.List;
 
 public class DBBuilding {
 
+    /*
+    查询所有宿舍楼的NO
+     */
     public static final List<Integer> queryBuildingNo (){
         Connection connection = DBUtil.getConnection();
         PreparedStatement preparedStatement = null;
@@ -34,6 +37,9 @@ public class DBBuilding {
         return integerList;
     }
 
+    /*
+    查询所有宿舍楼的所有信息
+     */
     public static final List<building> queryBuildingAll(){
         Connection connection = DBUtil.getConnection();
         PreparedStatement preparedStatement = null;
@@ -61,6 +67,9 @@ public class DBBuilding {
         return list;
     }
 
+    /*
+    根据楼的NO查询单个宿舍楼的所有信息
+     */
     public static final building queryBuilding(String buildingNo){
         Connection connection = DBUtil.getConnection();
         PreparedStatement preparedStatement = null;

@@ -11,6 +11,9 @@ import java.util.List;
 
 public class DBDormitory {
 
+    /*
+    查询所有宿舍的所有相关信息
+     */
     public static final List<dormitory> queryDorimtoryAll(){
         Connection connection = DBUtil.getConnection();
         PreparedStatement preparedStatement = null;
@@ -37,6 +40,9 @@ public class DBDormitory {
         return dormitoryList;
     }
 
+    /*
+    通过宿舍号查询单个宿舍的楼编号
+     */
     public static final String queryBuildingNoByDormitoryNo(String dormitoryNo){
         Connection connection = DBUtil.getConnection();
         PreparedStatement preparedStatement = null;
