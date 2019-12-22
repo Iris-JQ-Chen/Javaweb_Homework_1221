@@ -58,30 +58,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script type="text/javascript" src="jQuery/jquery-3.4.1.js"></script>
-    <script>
-    $(function () {
-      // $("#hide").click(function () {
-      //   $("p").hide();
-      // });
-      // $("#show").click(function () {
-      //   $("p").show();
-      // });
-      $("#button01").click(
-              function () {
-                $.post(
-                        "http://localhost:8080/Servlet_04",
-                        {
-                          name:"lfjlsdflsdkjflsdfjlsdjf",
-                          url:"http://www.runoob.com"
-                        },
-                        function (data,status) {
-                          alert(data+"\n"+status);
-                        }
-                );
-              }
-      );
-    });
-    </script>
 </head>
 <body>
 <div class="modal-dialog" style="margin-top: 10%">
