@@ -1,4 +1,6 @@
-<%--
+<%@ page import="bean.institute" %>
+<%@ page import="java.util.List" %>
+<%@ page import="dao.DBInstitute" %><%--
   Created by IntelliJ IDEA.
   User: 蒲公英之流
   Date: 2019-12-22
@@ -6,6 +8,13 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    List<institute> instituteList = DBInstitute.queryInstituteAll();
+    int instituteLength = 0;
+    if (instituteList != null && !instituteList.isEmpty()){
+        instituteLength = instituteList.size();
+    } else {}
+%>
 <html>
 <head>
     <title>学生首页</title>
@@ -84,11 +93,24 @@
             <hr class="hidden-sm hidden-md hidden-lg">
         </div><!-- col-sm-4 -->
         <div class="col-sm-8">
-            <h2>标题</h2>
-            <h5>副标题</h5>
-            <div class="fakeimg">图像</div>
-            <p>一些文本....速度快放假了深刻大姐夫阿萨德路口附近了深刻的房间里萨迪克</p>
-            <p>菜鸟教程，学的不仅是技术，更是梦想！！！菜鸟教程，学的不仅是技术，更是梦想！！！菜鸟教程，学的不仅是技术，更是梦想！！！</p>
+            <h2>学院信息</h2><br>
+            <table id="institute_table" class="table table-striped table-hover">
+                <%--<caption>基本的表格布局</caption>--%>
+                <thead>
+                <tr>
+                    <th>学院</th><th>辅导员</th><th>辅导员联系方式</th><th></th><th></th>
+                </tr>
+                </thead>
+                <tbody id="institute_tbody">
+                <%for (int i = 0 ; i < instituteLength ; i++){%>
+                <tr>
+                    <td id="<%=i+"institute_name"%>"><%=instituteList.get(i).getInstituteName()%></td>
+                    <td id="<%=i+"institute_coach"%>"><%=instituteList.get(i).getCoach()%></td>
+                    <td id="<%=i+"institute_coach_tel"%>"><%=instituteList.get(i).getCoachTel()%></td>
+                </tr>
+                <%}%>
+                </tbody>
+            </table>
             <br>
         </div><!-- col-sm-8 -->
         <div class="col-sm-8">
