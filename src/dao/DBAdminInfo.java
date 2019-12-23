@@ -10,7 +10,7 @@ import java.sql.SQLException;
 public class DBAdminInfo {
 
     /*
-    管理员自己修改自己密码
+    管理员自己修改自己电话
      */
     public static Boolean changeAdminTel(String adminId, String adminTel){
         Connection connection = DBUtil.getConnection();
