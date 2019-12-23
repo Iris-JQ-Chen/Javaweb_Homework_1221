@@ -40,7 +40,7 @@ public class DBInstitute {
     public static final Boolean changeCoachAndCoachTel(int instituteNo, String coach, String coachTel){
         Connection connection = DBUtil.getConnection();
         PreparedStatement preparedStatement = null;
-        String sql = "update Institute set coach = ? and coachTel = ? where instituteNo = ?";
+        String sql = "update Institute set coach = ?, coachTel = ? where instituteNo = ?;";
 
         try {
             preparedStatement = connection.prepareStatement(sql);
@@ -73,7 +73,7 @@ public class DBInstitute {
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
                 institute institute = new institute();
-                institute.setInstituteNo(resultSet.getByte("instituteNno"));
+                institute.setInstituteNo(resultSet.getByte("instituteNo"));
                 institute.setInstituteName(resultSet.getString("instituteName"));
                 institute.setCoach(resultSet.getString("coach"));
                 institute.setCoachTel(resultSet.getString("coachTel"));
@@ -86,6 +86,7 @@ public class DBInstitute {
             DBUtil.closeAll(resultSet,preparedStatement,null,connection);
         }
 
+        System.out.println("数据库查询成功"+instituteList.size());
         return instituteList;
     }
 
@@ -112,11 +113,6 @@ public class DBInstitute {
         String sql = "select * from institute where coach = ?";
         return queryInstitute(sql,coach);
     }
-
-//    public static final institute queryInstituteByCoachTel(String coachTel){
-//        String sql = "select * from institute where coachTel = ?";
-//        return queryInstitute(sql,coachTel);
-//    }
 
     private static final institute queryInstitute(String sql, int para){
         Connection connection = DBUtil.getConnection();
