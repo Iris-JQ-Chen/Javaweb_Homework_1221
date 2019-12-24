@@ -1,6 +1,6 @@
-<%@ page import="bean.institute" %>
 <%@ page import="java.util.List" %>
-<%@ page import="dao.DBInstitute" %><%--
+<%@ page import="bean.*" %>
+<%@ page import="dao.*" %><%--
   Created by IntelliJ IDEA.
   User: 蒲公英之流
   Date: 2019-12-22
@@ -9,6 +9,26 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
+    String userNo = new String();
+    Cookie[] cookies = request.getCookies();
+    student std = new student();
+    dormitoryManager dormitoryManager = new dormitoryManager();
+    if (cookies != null){
+        for (Cookie cookie : cookies){
+            if ("name".equalsIgnoreCase(cookie.getName())) {
+                if (!"".equalsIgnoreCase(cookie.getName())){
+                    userNo = cookie.getValue();
+                }
+            }
+        }
+    }
+    if (!"".equalsIgnoreCase(userNo)){
+        std = DBStudentInfo.queryStudentByStudentNo(userNo);
+    }
+    List<dormitoryManager> dormitoryManagerList = DBDormitoryManager.queryDormitoryManagerByStudentNo(userNo);
+    List<leaveRecord> leaveRecordList = DBLeaveRecord.queryLeaveRecordByStudentNo(userNo);
+    List<hygieneRecord> hygieneRecordList = DBHygieneRecord.queryHygieneRecordByStudentNo(userNo);
+
     List<institute> instituteList = DBInstitute.queryInstituteAll();
     int instituteLength = 0;
     if (instituteList != null && !instituteList.isEmpty()){
@@ -67,8 +87,8 @@
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="http://localhost:8080/Login">退出登录</a></li>
-                <li><a href="#">页面2</a></li>
-                <li><a href="#">页面3</a></li>
+                <%--<li><a href="#">页面2</a></li>--%>
+                <%--<li><a href="#">页面3</a></li>--%>
             </ul><!-- nav navbar-nav -->
         </div><!-- collapse navbar-collapse -->
     </div><!-- container-fluid -->
@@ -76,29 +96,59 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-sm-4">
-            <h2>具体功能</h2>
-            <h5>我的照片</h5>
-            <div class="fakeimg">这边插入图片</div>
-            <p>关于我的介绍的咖啡机的 点击放假了时代峰峻按理说单身快乐就发链接sdlkfjsldkfjsldkfjksdlfjlsdfsdj</p>
-            <h3>链接</h3>
-            <p>描述文本 打开附近拉斯柯达就发了啥快递费金老师的 拉达克福建省来得快</p>
+        <div class="col-sm-4" style="background-color: lightcyan">
+            <h2>河海大学</h2><br>
+            <h5></h5>
+            <br><br>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;河海大学（Hohai University），简称“河海（HHU）”，位于江苏省会南京市，是以水利为特色，工科为主，多学科协调发展的教育部直属，教育部、水利部、国家海洋局与江苏省人民政府共建的全国重点大学，是国家首批具有博士、硕士、学士三级学位授予权的单位，国家“211工程”重点建设、”985工程优势学科创新平台“建设以及设立研究生院的高校，是国家世界一流学科建设高校和国家卓越工程师教育培养计划高校。</p>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;河海大学的前身可以追溯到1915年创建于南京的“河海工程专门学校”，是中国第一所培养水利人才的高等学府。1924年与国立东南大学工科合并成立河海工科大学，1927年并入国立第四中山大学，后更名为国立中央大学、南京大学。1952年南京大学水利系、交通大学水利系、同济大学土木系水利组、浙江大学土木系水利组以及华东水利专科学校合并成立“华东水利学院”。1960年被中共中央认定为全国重点大学。1985年恢复传统校名“河海大学”。</p>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;根据2019年4月学校官网信息显示，学校在南京市、常州市设有西康路校区、江宁校区和常州校区，占地面积近2580亩；开设56个本科专业；有教职工3433名，各类学历教育在校学生51499名，其中研究生17142名，普通本科生19841名，成人教育学生13052名，留学生1464名。</p>
+            <br><p>&nbsp;&nbsp;&nbsp;&nbsp;河海大学常州校区的前身为1986年成立的河海大学机械学院，1996年5月更名为河海大学常州分校，2000年6月更名为河海大学常州校区。</p>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;根据2019年4月常州校区官网信息显示，常州校区地处江苏省苏锡常经济高速发展地区，占地436亩。常州校区设有机电工程学院、物联网工程学院、企业管理学院和基础学部；有2个二级学科博士点，1个一级学科硕士点，7个二级学科硕士点，4个专业学位硕士研究生授权点，及15个本科专业；有本科生5503人，全日制博硕士研究生667人，留学研究生54人，继续教育学生5879人，教职工604人；有3个省部级科研平台。</p>
+            <br><br><br><br><br>
+            <h3>相关功能</h3>
+            <br><br>
             <ul class="nav nav-pills nav-stacked">
                 <li><button type="button" id="changePassword" class="btn btn-primary btn-lg btn-block">修改密码</button></li>
-                <br>
-                <li><button type="button" class="btn btn-primary btn-lg btn-block">按钮1</button></li>
-                <br>
-                <li><button type="button" class="btn btn-primary btn-lg btn-block">按钮2</button></li>
+                <br><br><br>
             </ul><!-- nav nav-pills nav-stacked -->
             <hr class="hidden-sm hidden-md hidden-lg">
         </div><!-- col-sm-4 -->
+        <div class="col-sm-8">
+            <h2>个人信息</h2><br>
+            <table id="student_table" class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>学号</th><th>姓名</th><th>性别</th><th>学院</th><th>年级</th><th>宿舍号</th><th>联系方式</th>
+                </tr>
+                </thead>
+                <tbody id="student_tbody">
+                <tr>
+                    <td><%=std.getStudentNo()%></td>
+                    <td><%=std.getStudentName()%></td>
+                    <td><%=std.getStudentSex()%></td>
+                    <% if (std.getInstituteNo() == 1) { %>
+                    <td>物联网工程学院</td>
+                    <% } else if (std.getInstituteNo() == 2) { %>
+                    <td>企业管理学院</td>
+                    <% } else if (std.getInstituteNo() ==3) {%>
+                    <td><机电院></机电院></td>
+                    <% } %>
+                    <td><%=std.getStudentGrade()%></td>
+                    <td><%=std.getDormitoryNo()%></td>
+                    <td><%=std.getStudentTel()%></td>
+                </tr>
+                </tbody>
+            </table>
+            <br>
+        </div><!-- col-sm-8 -->
         <div class="col-sm-8">
             <h2>学院信息</h2><br>
             <table id="institute_table" class="table table-striped table-hover">
                 <%--<caption>基本的表格布局</caption>--%>
                 <thead>
                 <tr>
-                    <th>学院</th><th>辅导员</th><th>辅导员联系方式</th><th></th><th></th>
+                    <th>学院</th><th>辅导员</th><th>辅导员联系方式</th>
                 </tr>
                 </thead>
                 <tbody id="institute_tbody">
@@ -114,18 +164,73 @@
             <br>
         </div><!-- col-sm-8 -->
         <div class="col-sm-8">
-            <h2>标题</h2>
-            <h5>副标题</h5>
-            <div class="fakeimg">图像</div>
-            <p>一些文本....速度快放假了深刻大姐夫阿萨德路口附近了深刻的房间里萨迪克</p>
-            <p>菜鸟教程，学的不仅是技术，更是梦想！！！菜鸟教程，学的不仅是技术，更是梦想！！！菜鸟教程，学的不仅是技术，更是梦想！！！</p>
+            <h2>宿舍楼宿 · 管员信息</h2><br>
+            <table id="d_manager_table" class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>工号</th><th>姓名</th><th>楼号</th><th>辅导员联系方式</th>
+                </tr>
+                </thead>
+                <tbody id="d_manager_tbody">
+                <%for (int j = 0 ; j < dormitoryManagerList.size() ; j++){%>
+                <tr>
+                    <td><%=dormitoryManagerList.get(j).getManagerNo()%></td>
+                    <td><%=dormitoryManagerList.get(j).getManagerName()%></td>
+                    <td><%=dormitoryManagerList.get(j).getBuildingNo()%></td>
+                    <td><%=dormitoryManagerList.get(j).getManagerTel()%></td>
+                </tr>
+                <%}%>
+                </tbody>
+            </table>
+            <br>
+        </div><!-- col-sm-8 -->
+        <div class="col-sm-8">
+            <h2>离校记录</h2><br>
+            <table id="leave_record_table" class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>目的地</th><th>外出原因</th><th>出发时间</th><th>预计返回时间</th><th>实际返回时间</th>
+                </tr>
+                </thead>
+                <tbody id="leave_record_tbody">
+                <%for (int k = 0 ; k < leaveRecordList.size() ; k++){%>
+                <tr>
+                    <td><%=leaveRecordList.get(k).getPlace()%></td>
+                    <td><%=leaveRecordList.get(k).getReason()%></td>
+                    <td><%=leaveRecordList.get(k).getLeaveDate()%></td>
+                    <td><%=leaveRecordList.get(k).getExbackDate()%></td>
+                    <td><%=leaveRecordList.get(k).getAcbackDate()%></td>
+                </tr>
+                <%}%>
+                </tbody>
+            </table>
+            <br>
+        </div><!-- col-sm-8 -->
+        <div class="col-sm-8">
+            <h2>卫生检查信息</h2><br>
+            <table id="hygiene_record_table" class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>卫生检查成绩</th><th>卫生检查时间</th><th>处理人</th>
+                </tr>
+                </thead>
+                <tbody id="hygiene_record_tbody">
+                <%for (int h = 0 ; h < hygieneRecordList.size() ; h++){%>
+                <tr>
+                    <td><%=hygieneRecordList.get(h).getHygieneGrade()%></td>
+                    <td><%=hygieneRecordList.get(h).getRecordDate()%></td>
+                    <td><%=hygieneRecordList.get(h).getManagerNo()%></td>
+                </tr>
+                <%}%>
+                </tbody>
+            </table>
             <br>
         </div><!-- col-sm-8 -->
     </div><!-- row -->
 </div><!-- container -->
 
 <div class="jumbotron text-center" style="margin-bottom: 0">
-    <p>底部内容</p>
+    <p>我是有底线的</p>
 </div><!-- jumbotron text-center -->
 
 </body>

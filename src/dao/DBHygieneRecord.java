@@ -19,6 +19,11 @@ public class DBHygieneRecord {
         return queryByPara(sql,dormitoryNo);
     }
 
+    public static final List<hygieneRecord> queryHygieneRecordByStudentNo(String studentNo){
+        String sql = "select * from HygieneRecord where dormitoryNo = (select dormitoryNo from StudentInfo where studentNo = ?)";
+        return queryByPara(sql,studentNo);
+    }
+
     /*
     根据日期查询当天所有的卫生记录
      */

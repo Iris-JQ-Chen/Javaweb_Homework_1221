@@ -36,6 +36,39 @@ public class DBDormitoryManager {
     }
 
     /*
+    通过学生学号查询他所在的宿舍楼的所有宿管员信息
+     */
+    public static List<dormitoryManager> queryDormitoryManagerByStudentNo(String studentNo){
+        Connection connection = DBUtil.getConnection();
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<dormitoryManager> dormitoryManagerList = new LinkedList<>();
+        String sql = "select * from DormitoryManager where buildingNo = (select buildingNo from Dormitory where dormitoryNo = (select dormitoryNo from StudentInfo where studentNo = ?))";
+
+
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,studentNo);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                dormitoryManager dormitoryManager = new dormitoryManager();
+                dormitoryManager.setManagerNo(resultSet.getString("managerNo"));
+                dormitoryManager.setManagerName(resultSet.getString("managerName"));
+                dormitoryManager.setManagerTel(resultSet.getString("managerTel"));
+                dormitoryManager.setBuildingNo(resultSet.getString("buildingNo"));
+                dormitoryManagerList.add(dormitoryManager);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            DBUtil.closeAll(resultSet,preparedStatement,null,connection);
+        }
+
+        return dormitoryManagerList;
+    }
+
+    /*
     获得所有宿管员的所有相关信息
      */
     public static final List<dormitoryManager> queryDormitoryManagerAll(){
