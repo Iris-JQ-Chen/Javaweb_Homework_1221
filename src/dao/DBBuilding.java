@@ -1,6 +1,7 @@
 package dao;
 
 import bean.building;
+import bean.dormitory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -66,6 +67,8 @@ public class DBBuilding {
 
         return list;
     }
+
+
 
     /*
     根据楼的NO查询单个宿舍楼的所有信息

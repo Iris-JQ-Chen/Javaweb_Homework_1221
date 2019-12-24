@@ -71,6 +71,10 @@ public class DBStudentInfo {
     }
 
     /*
+    根据宿舍
+     */
+
+    /*
     根据学生姓名查询到这个学生的所有信息
      */
     public static final List<student> queryStudentByStudentName(String studentName){

@@ -1,6 +1,9 @@
-<%@ page import="bean.institute" %>
 <%@ page import="java.util.List" %>
-<%@ page import="dao.DBInstitute" %><%--
+<%@ page import="dao.DBInstitute" %>
+<%@ page import="dao.DBDormitoryManager" %>
+<%@ page import="dao.DBDormitory" %>
+<%@ page import="bean.*" %>
+<%@ page import="dao.DBHygieneRecord" %><%--
   Created by IntelliJ IDEA.
   User: 蒲公英之流
   Date: 2019-12-22
@@ -9,6 +12,25 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
+    String userNo = new String();
+    Cookie[] cookies = request.getCookies();
+    dormitoryManager manager = new dormitoryManager();
+    if (cookies != null){
+        for (Cookie cookie : cookies){
+            if ("name".equalsIgnoreCase(cookie.getName())) {
+                if (!"".equalsIgnoreCase(cookie.getName())){
+                    userNo = cookie.getValue();
+                }
+            }
+        }
+    }
+    if (!"".equalsIgnoreCase(userNo)){
+        manager = DBDormitoryManager.queryDormitoryManagerByManagerNo(userNo);
+    }
+    List<dormitory> dormitoryList = DBDormitory.queryDormitoryByManagerNo(userNo);
+    List<hygieneRecord> hygieneRecordList = DBHygieneRecord.queryHygieneRecordByManagerNo(userNo);
+
+
     List<institute> instituteList = DBInstitute.queryInstituteAll();
     int instituteLength = 0;
     if (instituteList != null && !instituteList.isEmpty()){
@@ -67,8 +89,6 @@
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="http://localhost:8080/Login">退出登录</a></li>
-                <li><a href="#">页面2</a></li>
-                <li><a href="#">页面3</a></li>
             </ul><!-- nav navbar-nav -->
         </div><!-- collapse navbar-collapse -->
     </div><!-- container-fluid -->
@@ -76,22 +96,43 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-sm-4">
-            <h2>具体功能</h2>
-            <h5>我的照片</h5>
-            <div class="fakeimg">这边插入图片</div>
-            <p>关于我的介绍的咖啡机的 点击放假了时代峰峻按理说单身快乐就发链接sdlkfjsldkfjsldkfjksdlfjlsdfsdj</p>
-            <h3>链接</h3>
-            <p>描述文本 打开附近拉斯柯达就发了啥快递费金老师的 拉达克福建省来得快</p>
+        <div class="col-sm-4" style="background-color: lightcyan">
+            <h2>河海大学</h2><br>
+            <h5></h5>
+            <br><br>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;河海大学（Hohai University），简称“河海（HHU）”，位于江苏省会南京市，是以水利为特色，工科为主，多学科协调发展的教育部直属，教育部、水利部、国家海洋局与江苏省人民政府共建的全国重点大学，是国家首批具有博士、硕士、学士三级学位授予权的单位，国家“211工程”重点建设、”985工程优势学科创新平台“建设以及设立研究生院的高校，是国家世界一流学科建设高校和国家卓越工程师教育培养计划高校。</p>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;河海大学的前身可以追溯到1915年创建于南京的“河海工程专门学校”，是中国第一所培养水利人才的高等学府。1924年与国立东南大学工科合并成立河海工科大学，1927年并入国立第四中山大学，后更名为国立中央大学、南京大学。1952年南京大学水利系、交通大学水利系、同济大学土木系水利组、浙江大学土木系水利组以及华东水利专科学校合并成立“华东水利学院”。1960年被中共中央认定为全国重点大学。1985年恢复传统校名“河海大学”。</p>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;根据2019年4月学校官网信息显示，学校在南京市、常州市设有西康路校区、江宁校区和常州校区，占地面积近2580亩；开设56个本科专业；有教职工3433名，各类学历教育在校学生51499名，其中研究生17142名，普通本科生19841名，成人教育学生13052名，留学生1464名。</p>
+            <br><p>&nbsp;&nbsp;&nbsp;&nbsp;河海大学常州校区的前身为1986年成立的河海大学机械学院，1996年5月更名为河海大学常州分校，2000年6月更名为河海大学常州校区。</p>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;根据2019年4月常州校区官网信息显示，常州校区地处江苏省苏锡常经济高速发展地区，占地436亩。常州校区设有机电工程学院、物联网工程学院、企业管理学院和基础学部；有2个二级学科博士点，1个一级学科硕士点，7个二级学科硕士点，4个专业学位硕士研究生授权点，及15个本科专业；有本科生5503人，全日制博硕士研究生667人，留学研究生54人，继续教育学生5879人，教职工604人；有3个省部级科研平台。</p>
+            <br><br><br><br><br>
+            <h3>相关功能</h3>
+            <br><br>
             <ul class="nav nav-pills nav-stacked">
                 <li><button type="button" id="changePassword" class="btn btn-primary btn-lg btn-block">修改密码</button></li>
-                <br>
-                <li><button type="button" class="btn btn-primary btn-lg btn-block">按钮1</button></li>
-                <br>
-                <li><button type="button" class="btn btn-primary btn-lg btn-block">按钮2</button></li>
+                <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
             </ul><!-- nav nav-pills nav-stacked -->
             <hr class="hidden-sm hidden-md hidden-lg">
         </div><!-- col-sm-4 -->
+        <div class="col-sm-8">
+            <h2>个人信息</h2><br>
+            <table id="d_manager_table" class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>工号</th><th>姓名</th><th>所在楼号</th><th>联系方式</th>
+                </tr>
+                </thead>
+                <tbody id="d_manager_tbody">
+                <tr>
+                    <td><%=manager.getManagerNo()%></td>
+                    <td><%=manager.getManagerName()%></td>
+                    <td><%=manager.getBuildingNo()%></td>
+                    <td><%=manager.getManagerTel()%></td>
+                </tr>
+                </tbody>
+            </table>
+            <br>
+        </div><!-- col-sm-8 -->
         <div class="col-sm-8">
             <h2>学院信息</h2><br>
             <table id="institute_table" class="table table-striped table-hover">
@@ -111,6 +152,71 @@
                 <%}%>
                 </tbody>
             </table>
+            <br>
+        </div><!-- col-sm-8 -->
+        <div class="col-sm-8">
+            <h2>宿舍楼</h2><br><br>
+            <div class="pre-scrollable" style="height: 280px; margin-top: -22px;">
+                <table id="building_table" class="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>楼号</th><th>宿舍号</th>
+                    </tr>
+                    </thead>
+                    <tbody id="dormitory_tbody">
+                    <%for (int j = 0 ; j < dormitoryList.size() ; j++){%>
+                    <tr>
+                        <td><%=dormitoryList.get(j).getBuildingNo()%></td>
+                        <td><%=dormitoryList.get(j).getDormitoryNo()%></td>  </tr>
+                    <%}%>
+                    </tbody>
+                </table>
+            </div>
+            <br>
+        </div><!-- col-sm-8 -->
+        <div class="col-sm-8">
+            <h2>卫生查询记录</h2><br><br>
+            <div class="pre-scrollable" style="height: 280px; margin-top: -22px;">
+                <table id="hygiene_record_table" class="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>卫生检查结果</th><th>卫生检查时间</th><th>宿舍号</th>
+                    </tr>
+                    </thead>
+                    <tbody id="hygiene_record_tbody">
+                    <%for (int k = 0 ; k < hygieneRecordList.size() ; k++){%>
+                    <tr>
+                        <td><%=hygieneRecordList.get(k).getHygieneGrade()%></td>
+                        <td><%=hygieneRecordList.get(k).getRecordDate()%></td>
+                        <td><%=hygieneRecordList.get(k).getDormitoryNo()%></td>
+                    </tr>
+                    <%}%>
+                    </tbody>
+                </table>
+            </div>
+            <br>
+        </div><!-- col-sm-8 -->
+        <div id="HygieneGradeDiv" class="col-sm-8">
+            <h2>卫生打分</h2><br>
+            <form class="form-horizontal" role="form" action="/HygieneGrade" method="post">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">宿舍号</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="DormitoryNo" name="DormitoryNo" value="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">分数</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="HygieneGrade" name="HygieneGrade" value="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-default">提交</button>
+                    </div>
+                </div>
+            </form>
             <br>
         </div><!-- col-sm-8 -->
     </div><!-- row -->

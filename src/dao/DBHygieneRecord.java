@@ -2,10 +2,7 @@ package dao;
 
 import bean.hygieneRecord;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -22,6 +19,33 @@ public class DBHygieneRecord {
     public static final List<hygieneRecord> queryHygieneRecordByStudentNo(String studentNo){
         String sql = "select * from HygieneRecord where dormitoryNo = (select dormitoryNo from StudentInfo where studentNo = ?)";
         return queryByPara(sql,studentNo);
+    }
+
+    public static final List<hygieneRecord> queryHygieneRecordByManagerNo(String managerNo){
+        String sql = "select * from HygieneRecord where managerNo = ?";
+        return queryByPara(sql,managerNo);
+    }
+
+    public static final Boolean addHygieneRecord(String managerNo, String dormitoryNo, String hygieneNo, String date){
+        Connection connection = DBUtil.getConnection();
+        PreparedStatement preparedStatement = null;
+        String sql = "insert into HygieneRecord (managerNo,dormitoryNo,hygieneGrade,recordDate) values (?,?,?,?);";
+
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,managerNo);
+            preparedStatement.setString(2,dormitoryNo);
+            preparedStatement.setString(3,hygieneNo);
+            preparedStatement.setString(4,date);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            DBUtil.closeAll(null,preparedStatement,null,connection);
+        }
+
+        return true;
     }
 
     /*
