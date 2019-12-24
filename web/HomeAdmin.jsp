@@ -72,6 +72,8 @@
             $("#changeStudentInfoDiv").hide();
             $("#showOneStudentInfoDiv").hide();
             $("#changeDManagerInfoDiv").hide();
+            $("#showLeaveRecordDiv").hide();
+            $("#showHygieneRecordDiv").hide();
             $("#changePassword").click(
                 function () {
                     var newPwd = window.prompt("请输入新密码","");
@@ -231,6 +233,52 @@
             $("#changeDManagerTel").val(DManagerTel);
             $("#changeDManagerInfoDiv").show();
         }
+        function queryLeaveRecordByStudentNo() {
+            var sNo = $("#queryLeaveRecordByStudentNo").val();
+            $.post(
+                "http://localhost:8080/QueryLeaveRecord",
+                {
+                    studentNo:sNo,
+                },
+                function (data,status) {
+                    var obj = JSON.parse(data);
+                    $("#leave_record_tbody").empty();
+                    if (obj.length == 0){
+                        alert("暂无记录");
+                    } else {
+                        alert(status);
+                        for (var i = 0 ; i < obj.length ; i++){
+                            var sTr = "<tr><td>"+obj[i].place+"</td><td>"+obj[i].reason+"</td><td>"+obj[i].leaveDate+"</td><td>"+obj[i].exbackDate+"</td><td>"+obj[i].acbackDate+"</td></tr>";
+                            $("#leave_record_tbody").append(sTr);
+                        }
+                        $("#showLeaveRecordDiv").show();
+                    }
+                }
+            );
+        }
+        function queryHygieneRecordByDormitoryNo() {
+            var dNo = $("#queryHygieneRecordByDormitoryNo").val();
+            $.post(
+                "http://localhost:8080/QueryHygieneRecord",
+                {
+                    dormitoryNo:dNo,
+                },
+                function (data, status) {
+                    var obj = JSON.parse(data);
+                    $("#hygiene_record_tbody").empty();
+                    if (obj.length == 0){
+                        alert("暂无记录");
+                    } else {
+                        alert(status);
+                        for (var i = 0 ; i < obj.length ; i++){
+                            var sTr = "<tr><td>"+obj[i].hygieneGrade+"</td><td>"+obj[i].recordDate+"</td><td>"+obj[i].managerNo+"</td></tr>";
+                            $("#hygiene_record_tbody").append(sTr);
+                        }
+                        $("#showHygieneRecordDiv").show();
+                    }
+                }
+            );
+        }
     </script>
 </head>
 <body>
@@ -262,7 +310,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-sm-4">
+        <div class="col-sm-4" style="height: max-content; background-color: lightcyan">
             <h2>河海大学</h2><br>
             <h5></h5>
             <%--<div class="fakeimg">这边插入图片</div>--%>
@@ -529,12 +577,72 @@
             </form>
             <br>
         </div><!-- col-sm-8 -->
+        <div class="col-sm-8">
+            <h2>学号查询学生离校记录</h2>
+            <div class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">学号</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="queryLeaveRecordByStudentNo" name="studentNo" placeholder="请输入学号">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button onclick="queryLeaveRecordByStudentNo()" class="btn btn-default">查询</button>
+                    </div>
+                </div>
+            </div>
+        </div><!-- cool-sm-8 -->
+        <div id="showLeaveRecordDiv" class="col-sm-8">
+            <h2>外出信息</h2><br><br>
+            <div class="pre-scrollable" style="height: 140px; margin-top: -22px;">
+                <table id="leave_record_table" class="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>目的地</th><th>外出原因</th><th>出发时间</th><th>预计返回时间</th><th>实际返回时间</th>
+                    </tr>
+                    </thead>
+                    <tbody id="leave_record_tbody"></tbody>
+                </table>
+            </div>
+            <br>
+        </div><!-- col-sm-8 -->
+        <div class="col-sm-8">
+            <h2>宿舍号查询卫生记录</h2>
+            <div class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">宿舍号</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="queryHygieneRecordByDormitoryNo" name="dormitoryNo" placeholder="请输入宿舍号">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button onclick="queryHygieneRecordByDormitoryNo()" class="btn btn-default">查询</button>
+                    </div>
+                </div>
+            </div>
+        </div><!-- cool-sm-8 -->
+        <div id="showHygieneRecordDiv" class="col-sm-8">
+            <h2>卫生检查信息</h2><br><br>
+            <div class="pre-scrollable" style="height: 140px; margin-top: -22px;">
+                <table id="hygiene_record_table" class="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>卫生检查结果</th><th>卫生检查时间</th><th>处理人</th>
+                    </tr>
+                    </thead>
+                    <tbody id="hygiene_record_tbody"></tbody>
+                </table>
+            </div>
+            <br>
+        </div><!-- col-sm-8 -->
         <%--<div class="col-sm-8">--%>
             <%--<h2>标题</h2>--%>
             <%--<h5>副标题</h5>--%>
             <%--<div class="fakeimg">图像</div>--%>
-            <%--<p>一些文本....速度快放假了深刻大姐夫阿萨德路口附近了深刻的房间里萨迪克</p>--%>
-            <%--<p>菜鸟教程，学的不仅是技术，更是梦想！！！菜鸟教程，学的不仅是技术，更是梦想！！！菜鸟教程，学的不仅是技术，更是梦想！！！</p>--%>
+            <%--<p>一些文本....</p>--%>
+            <%--<p>菜鸟教程，学的不仅是技术，更是梦想！！！</p>--%>
             <%--<br>--%>
         <%--</div><!-- col-sm-8 -->--%>
     </div><!-- row -->
