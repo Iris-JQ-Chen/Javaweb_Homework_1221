@@ -75,7 +75,21 @@
                     );
                 }
             );
-        })
+            $("#changeAdminTel").click(
+                function () {
+                    var newTel = window.prompt("请输入新的手机号","");
+                    $.post(
+                        "http://localhost:8080/ChangeTel",
+                        {
+                            tt:newTel.toString(),
+                        },
+                        function (data,status) {
+                            alert(status);
+                        }
+                    );
+                }
+            );
+        });
         function changeCoach(id) {
             var newCoach = window.prompt("请输入辅导员姓名","");
             var newCoachTel = window.prompt("请输入辅导员电话","");
@@ -233,7 +247,7 @@
             <ul class="nav nav-pills nav-stacked">
                 <li><button type="button" id="changePassword" class="btn btn-primary btn-lg btn-block">修改密码</button></li>
                 <br><br><br><br>
-                <li><button type="button" class="btn btn-primary btn-lg btn-block">按钮1</button></li>
+                <li><button type="button" id="changeAdminTel" class="btn btn-primary btn-lg btn-block">修改电话</button></li>
                 <br><br><br><br>
                 <li><button type="button" class="btn btn-primary btn-lg btn-block">按钮2</button></li>
                 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
