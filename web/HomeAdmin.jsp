@@ -3,7 +3,9 @@
 <%@ page import="dao.DBInstitute" %>
 <%@ page import="bean.student" %>
 <%@ page import="dao.DBStudentInfo" %>
-<%@ page import="java.util.LinkedList" %><%--
+<%@ page import="java.util.LinkedList" %>
+<%@ page import="bean.dormitoryManager" %>
+<%@ page import="dao.DBDormitoryManager" %><%--
   Created by IntelliJ IDEA.
   User: 蒲公英之流
   Date: 2019-12-22
@@ -40,7 +42,15 @@
     if (studentList != null && !studentList.isEmpty()){
         studentLength = studentList.size();
     } else {}
-    System.out.println(studentLength);
+
+
+    List<dormitoryManager> dormitoryManagerList = new LinkedList<>();
+    int dormitoryManagerLength = 0;
+    dormitoryManagerList = DBDormitoryManager.queryDormitoryManagerAll();
+    if (dormitoryManagerList != null && !dormitoryManagerList.isEmpty()){
+        dormitoryManagerLength = dormitoryManagerList.size();
+    } else {}
+
 %>
 <html>
 <head>
@@ -61,6 +71,7 @@
         $(function () {
             $("#changeStudentInfoDiv").hide();
             $("#showOneStudentInfoDiv").hide();
+            $("#changeDManagerInfoDiv").hide();
             $("#changePassword").click(
                 function () {
                     var newPwd = window.prompt("请输入新密码","");
@@ -84,7 +95,7 @@
                             tt:newTel.toString(),
                         },
                         function (data,status) {
-                            alert(status);
+                            alert(bstatus);
                         }
                     );
                 }
@@ -206,6 +217,20 @@
             $("#changeStudentTel").val($("#one_student_tel").text());
             $("#changeStudentInfoDiv").show();
         }
+        function changeDManagerInfo(id) {
+            var index = id[0];
+
+            var DManagerNo = document.getElementById(index+"d_manager_no").innerText;
+            var DManagerName = document.getElementById(index+"d_manager_name").innerText;
+            var DManagerBuildingNo = document.getElementById(index+"d_manager_building_no").innerText;
+            var DManagerTel = document.getElementById(index+"d_manager_tel").innerText;
+
+            $("#changeDManagerNo").val(DManagerNo);
+            $("#changeDManagerName").val(DManagerName);
+            $("#changeBuildingNo").val(DManagerBuildingNo);
+            $("#changeDManagerTel").val(DManagerTel);
+            $("#changeDManagerInfoDiv").show();
+        }
     </script>
 </head>
 <body>
@@ -228,8 +253,8 @@
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="http://localhost:8080/Login">退出登录</a></li>
-                <li><a href="#">页面2</a></li>
-                <li><a href="#">页面3</a></li>
+                <%--<li><a href="#">页面2</a></li>--%>
+                <%--<li><a href="#">页面3</a></li>--%>
             </ul><!-- nav navbar-nav -->
         </div><!-- collapse navbar-collapse -->
     </div><!-- container-fluid -->
@@ -238,19 +263,27 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-4">
-            <h2>具体功能</h2>
-            <h5>我的照片</h5>
-            <div class="fakeimg">这边插入图片</div>
-            <p>关于我的介绍的咖啡机的 点击放假了时代峰峻按理说单身快乐就发链接sdlkfjsldkfjsldkfjksdlfjlsdfsdj</p>
-            <h3>链接</h3>
-            <p>描述文本 打开附近拉斯柯达就发了啥快递费金老师的 拉达克福建省来得快</p>
+            <h2>河海大学</h2><br>
+            <h5></h5>
+            <%--<div class="fakeimg">这边插入图片</div>--%>
+            <%--<img src="/WEB-INF/img/hohai.png" class="img-rounded">--%>
+            <%--<img src="/WEB-INF/img/hohai.png" alt="河海风光">--%>
+            <br><br>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;河海大学（Hohai University），简称“河海（HHU）”，位于江苏省会南京市，是以水利为特色，工科为主，多学科协调发展的教育部直属，教育部、水利部、国家海洋局与江苏省人民政府共建的全国重点大学，是国家首批具有博士、硕士、学士三级学位授予权的单位，国家“211工程”重点建设、”985工程优势学科创新平台“建设以及设立研究生院的高校，是国家世界一流学科建设高校和国家卓越工程师教育培养计划高校。</p>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;河海大学的前身可以追溯到1915年创建于南京的“河海工程专门学校”，是中国第一所培养水利人才的高等学府。1924年与国立东南大学工科合并成立河海工科大学，1927年并入国立第四中山大学，后更名为国立中央大学、南京大学。1952年南京大学水利系、交通大学水利系、同济大学土木系水利组、浙江大学土木系水利组以及华东水利专科学校合并成立“华东水利学院”。1960年被中共中央认定为全国重点大学。1985年恢复传统校名“河海大学”。</p>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;根据2019年4月学校官网信息显示，学校在南京市、常州市设有西康路校区、江宁校区和常州校区，占地面积近2580亩；开设56个本科专业；有教职工3433名，各类学历教育在校学生51499名，其中研究生17142名，普通本科生19841名，成人教育学生13052名，留学生1464名。</p>
+            <br><p>&nbsp;&nbsp;&nbsp;&nbsp;河海大学常州校区的前身为1986年成立的河海大学机械学院，1996年5月更名为河海大学常州分校，2000年6月更名为河海大学常州校区。</p>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;根据2019年4月常州校区官网信息显示，常州校区地处江苏省苏锡常经济高速发展地区，占地436亩。常州校区设有机电工程学院、物联网工程学院、企业管理学院和基础学部；有2个二级学科博士点，1个一级学科硕士点，7个二级学科硕士点，4个专业学位硕士研究生授权点，及15个本科专业；有本科生5503人，全日制博硕士研究生667人，留学研究生54人，继续教育学生5879人，教职工604人；有3个省部级科研平台。</p>
+            <br><br><br><br><br>
+            <h3>相关功能</h3>
+            <br><br>
             <ul class="nav nav-pills nav-stacked">
                 <li><button type="button" id="changePassword" class="btn btn-primary btn-lg btn-block">修改密码</button></li>
-                <br><br><br><br>
+                <br>
                 <li><button type="button" id="changeAdminTel" class="btn btn-primary btn-lg btn-block">修改电话</button></li>
-                <br><br><br><br>
+                <br>
                 <li><button type="button" class="btn btn-primary btn-lg btn-block">按钮2</button></li>
-                <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
             </ul><!-- nav nav-pills nav-stacked -->
             <hr class="hidden-sm hidden-md hidden-lg">
         </div><!-- col-sm-4 -->
@@ -438,18 +471,77 @@
             <br>
         </div><!-- col-sm-8 -->
         <div class="col-sm-8">
-            <h2>标题</h2>
-            <h5>副标题</h5>
-            <div class="fakeimg">图像</div>
-            <p>一些文本....速度快放假了深刻大姐夫阿萨德路口附近了深刻的房间里萨迪克</p>
-            <p>菜鸟教程，学的不仅是技术，更是梦想！！！菜鸟教程，学的不仅是技术，更是梦想！！！菜鸟教程，学的不仅是技术，更是梦想！！！</p>
+            <h2>宿管员信息</h2><br><br>
+            <div class="pre-scrollable" style="height: 280px; margin-top: -22px;">
+                <table id="dormitory_table" class="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>工号</th><th>姓名</th><th>所在楼号</th><th>联系方式</th>
+                    </tr>
+                    </thead>
+                    <tbody id="dormitory_tbody">
+                    <%for (int k = 0 ; k < dormitoryManagerLength ; k++){%>
+                    <tr>
+                        <td id="<%=k+"d_manager_no"%>"><%=dormitoryManagerList.get(k).getManagerNo()%></td>
+                        <td id="<%=k+"d_manager_name"%>"><%=dormitoryManagerList.get(k).getManagerName()%></td>
+                        <td id="<%=k+"d_manager_building_no"%>"><%=dormitoryManagerList.get(k).getBuildingNo()%></td>
+                        <td id="<%=k+"d_manager_tel"%>"><%=dormitoryManagerList.get(k).getManagerTel()%></td>
+                        <td><button type="button" onclick="changeDManagerInfo(this.id)" class="btn btn-info" id="<%=k+"changeDManagerInfo"%>">修改信息</button></td>
+                    </tr>
+                    <%}%>
+                    </tbody>
+                </table>
+            </div>
             <br>
         </div><!-- col-sm-8 -->
+        <div id="changeDManagerInfoDiv" class="col-sm-8">
+            <h2>宿管信息修改</h2><br>
+            <form class="form-horizontal" role="form" action="/DManagerTransaction" method="post">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">工号</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="changeDManagerNo" name="changeDManagerNo" value="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">姓名</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="changeDManagerName" name="changeDManagerName" disabled="disabled" value="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">所在楼号</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="changeBuildingNo" name="changeBuildingNo" value="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">联系方式</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="changeDManagerTel" name="changeDManagerTel" value="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-default">提交修改</button>
+                    </div>
+                </div>
+            </form>
+            <br>
+        </div><!-- col-sm-8 -->
+        <%--<div class="col-sm-8">--%>
+            <%--<h2>标题</h2>--%>
+            <%--<h5>副标题</h5>--%>
+            <%--<div class="fakeimg">图像</div>--%>
+            <%--<p>一些文本....速度快放假了深刻大姐夫阿萨德路口附近了深刻的房间里萨迪克</p>--%>
+            <%--<p>菜鸟教程，学的不仅是技术，更是梦想！！！菜鸟教程，学的不仅是技术，更是梦想！！！菜鸟教程，学的不仅是技术，更是梦想！！！</p>--%>
+            <%--<br>--%>
+        <%--</div><!-- col-sm-8 -->--%>
     </div><!-- row -->
 </div><!-- container -->
 
 <div class="jumbotron text-center" style="margin-bottom: 0">
-    <p>底部内容</p>
+    <p>我是有底线的！</p>
 </div><!-- jumbotron text-center -->
 
 </body>

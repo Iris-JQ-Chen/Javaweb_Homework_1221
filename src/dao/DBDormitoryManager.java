@@ -12,41 +12,18 @@ import java.util.List;
 public class DBDormitoryManager {
 
     /*
-    修改某NO的宿管员的关联楼编号
+    通过宿管员编号修改宿管员信息
      */
-    public static final Boolean changeBuildingNoByManagerNo(String managerNo, String buildingNo){
+    public static final Boolean changeDormitoryManagerInfoByManagerNo(String managerNo, String buildingNo, String managerTel){
         Connection connection = DBUtil.getConnection();
         PreparedStatement preparedStatement = null;
-        String sql = "update dormitoryManager set buildingNo = ? where managerNo = ?";
+        String sql = "update dormitoryManager set buildingNo = ?, managerTel = ? where managerNo = ?";
 
         try {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, buildingNo);
-            preparedStatement.setString(2,managerNo);
-            preparedStatement.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        } finally {
-            DBUtil.closeAll(null,preparedStatement,null,connection);
-        }
-
-        return true;
-
-    }
-
-    /*
-    修改某NO的管理员的相关手机号
-     */
-    public static final Boolean changeManagerTelByManagerNo(String managerNo, String managerTel){
-        Connection connection = DBUtil.getConnection();
-        PreparedStatement preparedStatement = null;
-        String sql = "update dormitoryManager set managerTel = ? where mangerNo = ?";
-
-        try {
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1,managerTel);
-            preparedStatement.setString(2,managerNo);
+            preparedStatement.setString(2, managerTel);
+            preparedStatement.setString(3,managerNo);
             preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
