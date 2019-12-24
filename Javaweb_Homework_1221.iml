@@ -21,5 +21,8 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="jsp-api" level="project" />
     <orderEntry type="library" name="sqljdbc4-2.0" level="project" />
+    <orderEntry type="library" name="gson-2.8.2" level="project" />
+    <orderEntry type="library" name="gson-2.8.2 (2)" level="project" />
+    <orderEntry type="library" name="gson-2.8.0" level="project" />
   </component>
 </module>

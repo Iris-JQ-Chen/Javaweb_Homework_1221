@@ -8,27 +8,8 @@ import java.util.List;
 
 public class DBStudentInfo {
 
-    /*
-    根据学生编号NO更改该学生学院信息
-     */
-    public static final Boolean changeInstituteNoByStudentNo(String studentNo, int instituteNo){
-        String sql = "update studentInfo set instituteNo = '"+instituteNo+"' where studentNo = '"+studentNo+"'";
-        return change(sql);
-    }
-
-    /*
-    根据学生编号NO更改学生宿舍信息
-     */
-    public static final Boolean changeDormitoryNoByStudentNo(String studentNo, String dormitoryNo){
-        String sql = "update studentInfo set dormitoryNo = '"+dormitoryNo+"' where studentNo = '"+studentNo+"'";
-        return change(sql);
-    }
-
-    /*
-    根据学生编号NO更改学生电话
-     */
-    public static final Boolean changeStudentTelByStudentNo(String studentNo,String studentTel){
-        String sql = "update studentInfo set studentTel = '"+studentTel+"' where studentNo = '"+studentNo+"'";
+    public static final Boolean changeStudentInfoByStudentNo(String studentNo, int instituteNo, String dormitoryNo, String studentTel){
+        String sql = "update StudentInfo set instituteNo = '"+instituteNo+"', dormitoryNo = '"+dormitoryNo+"', studentTel = '"+studentTel+"' where studentNo = '"+studentNo+"'";
         return change(sql);
     }
 
@@ -36,35 +17,6 @@ public class DBStudentInfo {
     查询所有学生的信息
      */
     public static final List<student> queryStudentAll(){
-//        Connection connection = DBUtil.getConnection();
-//        PreparedStatement preparedStatement = null;
-//        ResultSet resultSet = null;
-//        List<student> studentList = new LinkedList<>();
-//        String sql = "select * from student";
-//
-//        try {
-//            preparedStatement = connection.prepareStatement(sql);
-//            resultSet = preparedStatement.executeQuery();
-//            while (resultSet.next()){
-//                student student = new student();
-//                student.setStudentNo(resultSet.getString("studentNo"));
-//                student.setInstituteNo(resultSet.getByte("instituteNo"));
-//                student.setDormitoryNo(resultSet.getString("dormitoryNo"));
-//                student.setStudentName(resultSet.getString("studentName"));
-//                student.setStudentSex(resultSet.getString("studentSex"));
-//                student.setStudentGrade(resultSet.getString("studentGrade"));
-//                student.setStudentTel(resultSet.getString("studentTel"));
-//                studentList.add(student);
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            return null;
-//        } finally {
-//            DBUtil.closeAll(resultSet,preparedStatement,null,connection);
-//        }
-//
-//        return studentList;
-
         String sql = "select * from studentInfo";
         return query(sql);
     }
@@ -140,13 +92,14 @@ public class DBStudentInfo {
 
         try {
             statement = connection.createStatement();
-            return statement.execute(sql);
+            statement.execute(sql);
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         } finally {
             DBUtil.closeAll(null,null,statement,connection);
         }
+        return true;
     }
 
     private static final List<student> query(String sql){

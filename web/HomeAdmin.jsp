@@ -1,6 +1,9 @@
 <%@ page import="java.util.List" %>
 <%@ page import="bean.institute" %>
-<%@ page import="dao.DBInstitute" %><%--
+<%@ page import="dao.DBInstitute" %>
+<%@ page import="bean.student" %>
+<%@ page import="dao.DBStudentInfo" %>
+<%@ page import="java.util.LinkedList" %><%--
   Created by IntelliJ IDEA.
   User: 蒲公英之流
   Date: 2019-12-22
@@ -14,6 +17,30 @@
     if (instituteList != null && !instituteList.isEmpty()){
         instituteLength = instituteList.size();
     } else {}
+
+
+    List<student> studentList = new LinkedList<>();
+    int studentLength = 0;
+    String studentShow = request.getParameter("studentShow");
+    if (null == studentShow){
+        studentList = DBStudentInfo.queryStudentAll();
+    } else if ("1".equalsIgnoreCase(studentShow)){
+        studentList = DBStudentInfo.queryStudentByinstituteNo(1);
+    } else if ("2".equalsIgnoreCase(studentShow)){
+        studentList = DBStudentInfo.queryStudentByinstituteNo(2);
+    } else if ("3".equalsIgnoreCase(studentShow)){
+        studentList = DBStudentInfo.queryStudentByinstituteNo(3);
+    } else if ("4".equalsIgnoreCase(studentShow)){
+        studentList = DBStudentInfo.queryStudentByStudentSex("男");
+    } else if ("5".equalsIgnoreCase(studentShow)){
+        studentList = DBStudentInfo.queryStudentByStudentSex("女");
+    } else {
+        studentList = DBStudentInfo.queryStudentAll();
+    }
+    if (studentList != null && !studentList.isEmpty()){
+        studentLength = studentList.size();
+    } else {}
+    System.out.println(studentLength);
 %>
 <html>
 <head>
@@ -32,6 +59,8 @@
     </style>
     <script type="text/javascript">
         $(function () {
+            $("#changeStudentInfoDiv").hide();
+            $("#showOneStudentInfoDiv").hide();
             $("#changePassword").click(
                 function () {
                     var newPwd = window.prompt("请输入新密码","");
@@ -98,6 +127,71 @@
                 }
             );
         }
+        function showAll() {
+            window.location.href = "http://localhost:8080/HomeAdmin.jsp";
+        }
+        function changeStudentInfo(id) {
+            var index = id[0];
+            var studentNo = document.getElementById(index+"student_no").innerText;
+            var studentName = document.getElementById(index+"student_name").innerText;
+            var studentSex = document.getElementById(index+"student_sex").innerText;
+            var instituteNo = document.getElementById(index+"student_institute").innerText;
+            var studentGrade = document.getElementById(index+"student_grade").innerText;
+            var studentDormitoryNo = document.getElementById(index+"student_dormitory_no").innerText;
+            var studentTel = document.getElementById(index+"student_tel").innerText;
+
+            $("#changeStudentNo").val(studentNo);
+            $("#changeStudentName").val(studentName);
+            $("#changeStudentSex").val(studentSex);
+            $("#changeInstituteName").val(instituteNo);
+            $("#changeStudentGrade").val(studentGrade);
+            $("#changeDormitoryNo").val(studentDormitoryNo);
+            $("#changeStudentTel").val(studentTel);
+            $("#changeStudentInfoDiv").show();
+        }
+        function queryStudentByStudentNo() {
+
+            var sNo = $("#queryStudentByStudentNo").val();
+            $.post(
+                "http://localhost:8080/QueryAllUsers",
+                {
+                    studentNo:sNo
+                },
+                function (data,status) {
+                    alert(status);
+                    var obj = JSON.parse(data);
+                    $("#one_student_no").html(obj.studentNo.toString());
+                    $("#one_student_name").html(obj.studentName);
+                    $("#one_student_sex").html(obj.studentSex);
+                    $("#one_student_institute").html(obj.instituteNo);
+                    $("#one_student_grade").html(obj.studentGrade);
+                    $("#one_student_dormitory").html(obj.dormitoryNo);
+                    $("#one_student_tel").html(obj.studentTel);
+                    switch (obj.instituteNo) {
+                        case 1:
+                            $("#one_student_institute").html("物联网工程学院");
+                            break;
+                        case 2:
+                            $("#one_student_institute").html("企业管理学院");
+                            break;
+                        case 3:
+                            $("#one_student_institute").html("机电院");
+                            break;
+                    }
+                    $("#showOneStudentInfoDiv").show();
+                }
+            );
+        }
+        function changeStudentInfoByOne() {
+            $("#changeStudentNo").val($("#one_student_no").text());
+            $("#changeStudentName").val($("#one_student_name").text());
+            $("#changeStudentSex").val($("#one_student_sex").text());
+            $("#changeInstituteName").val($("#one_student_institute").text());
+            $("#changeStudentGrade").val($("#one_student_grade").text());
+            $("#changeDormitoryNo").val($("#one_student_dormitory").text());
+            $("#changeStudentTel").val($("#one_student_tel").text());
+            $("#changeStudentInfoDiv").show();
+        }
     </script>
 </head>
 <body>
@@ -138,16 +232,17 @@
             <p>描述文本 打开附近拉斯柯达就发了啥快递费金老师的 拉达克福建省来得快</p>
             <ul class="nav nav-pills nav-stacked">
                 <li><button type="button" id="changePassword" class="btn btn-primary btn-lg btn-block">修改密码</button></li>
-                <br>
+                <br><br><br><br>
                 <li><button type="button" class="btn btn-primary btn-lg btn-block">按钮1</button></li>
-                <br>
+                <br><br><br><br>
                 <li><button type="button" class="btn btn-primary btn-lg btn-block">按钮2</button></li>
+                <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
             </ul><!-- nav nav-pills nav-stacked -->
             <hr class="hidden-sm hidden-md hidden-lg">
         </div><!-- col-sm-4 -->
         <div class="col-sm-8">
-            <h2>学院信息</h2>
-            <table id="institute_table" class="table">
+            <h2>学院信息</h2><br>
+            <table id="institute_table" class="table table-striped table-hover">
                 <%--<caption>基本的表格布局</caption>--%>
                 <thead>
                 <tr>
@@ -166,6 +261,166 @@
                 <%}%>
                 </tbody>
             </table>
+            <br>
+        </div><!-- col-sm-8 -->
+        <div class="col-sm-8">
+            <h2>学生信息</h2>
+            <div class="btn-group" >
+                <button onclick="showAll(this)" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">查看全部学生信息</button>
+            </div>&nbsp;&nbsp;&nbsp;
+            <div class="btn-group" >
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">按学院查看学生信息
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li>
+                        <a href="http://localhost:8080/HomeAdmin.jsp?studentShow=1">物联网工程学院</a>
+                    </li>
+                    <li>
+                        <a href="http://localhost:8080/HomeAdmin.jsp?studentShow=2">企业管理学院</a>
+                    </li>
+                    <li>
+                        <a href="http://localhost:8080/HomeAdmin.jsp?studentShow=3">机电院</a>
+                    </li>
+                </ul>
+            </div>&nbsp;&nbsp;&nbsp;
+            <div class="btn-group" >
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">按性别查看学生信息
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li>
+                        <a href="http://localhost:8080/HomeAdmin.jsp?studentShow=4">男</a>
+                    </li>
+                    <li>
+                        <a href="http://localhost:8080/HomeAdmin.jsp?studentShow=5">女</a>
+                    </li>
+                </ul>
+            </div>
+            <br><br>
+            <div class="pre-scrollable" style="height: 280px; margin-top: -22px;">
+                <table id="student_table" class="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>学号</th><th>姓名</th><th>性别</th><th>学院</th><th>年级</th><th>宿舍号</th><th>联系方式</th>
+                    </tr>
+                    </thead>
+                    <tbody id="student_tbody">
+                    <%for (int j = 0 ; j < studentLength ; j++){%>
+                    <tr>
+                        <td id="<%=j+"student_no"%>"><%=studentList.get(j).getStudentNo()%></td>
+                        <td id="<%=j+"student_name"%>"><%=studentList.get(j).getStudentName()%></td>
+                        <td id="<%=j+"student_sex"%>"><%=studentList.get(j).getStudentSex()%></td>
+
+                        <% if (studentList.get(j).getInstituteNo() == 1) { %>
+                        <td id="<%=j+"student_institute"%>">物联网工程学院</td>
+                        <% } else if (studentList.get(j).getInstituteNo() == 2) { %>
+                        <td id="<%=j+"student_institute"%>">企业管理学院</td>
+                        <% } else { %>
+                        <td id="<%=j+"student_institute"%>">机电院</td>
+                        <% } %>
+
+                        <td id="<%=j+"student_grade"%>"><%=studentList.get(j).getStudentGrade()%></td>
+                        <td id="<%=j+"student_dormitory_no"%>"><%=studentList.get(j).getDormitoryNo()%></td>
+                        <td id="<%=j+"student_tel"%>"><%=studentList.get(j).getStudentTel()%></td>
+                        <td><button type="button" onclick="changeStudentInfo(this.id)" class="btn btn-info" id="<%=j+"changeStudentInfo"%>">修改信息</button></td>
+
+                    </tr>
+                    <%}%>
+                    </tbody>
+                </table>
+            </div>
+            <br>
+        </div><!-- col-sm-8 -->
+        <div class="col-sm-8">
+            <h2>学号查询学生信息</h2>
+            <div class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">学号</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="queryStudentByStudentNo" name="studentNo" placeholder="请输入学号">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button onclick="queryStudentByStudentNo()" class="btn btn-default">查询</button>
+                    </div>
+                </div>
+            </div>
+        </div><!-- cool-sm-8 -->
+        <div id="showOneStudentInfoDiv" class="col-sm-8">
+            <h2>您所查询的学生信息如下</h2>
+            <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>学号</th><th>姓名</th><th>性别</th><th>学院</th><th>年级</th><th>宿舍号</th><th>联系方式</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td id="one_student_no"></td>
+                    <td id="one_student_name"></td>
+                    <td id="one_student_sex"></td>
+                    <td id="one_student_institute"></td>
+                    <td id="one_student_grade"></td>
+                    <td id="one_student_dormitory"></td>
+                    <td id="one_student_tel"></td>
+                    <td><button type="button" onclick="changeStudentInfoByOne()" class="btn btn-info" >修改信息</button></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="changeStudentInfoDiv" class="col-sm-8">
+            <h2>学生信息修改</h2><br>
+            <form class="form-horizontal" role="form" action="/StudentTransaction" method="post">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">学号</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="changeStudentNo" name="changeStudentNo" value="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">姓名</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="changeStudentName" name="changeStudentName" disabled="disabled" value="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">性别</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="changeStudentSex" name="changeStudentSex" disabled="disabled" value="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">学院</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="changeInstituteName" name="changeInstituteName" value="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">年级</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="changeStudentGrade" name="changeStudentGrade" disabled="disabled" value="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">宿舍号</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="changeDormitoryNo" name="changeDormitoryNo" value="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">联系方式</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="changeStudentTel" name="changeStudentTel" value="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-default">提交修改</button>
+                    </div>
+                </div>
+            </form>
             <br>
         </div><!-- col-sm-8 -->
         <div class="col-sm-8">
