@@ -11,6 +11,7 @@ public class leaveRecord {
     private Date leaveDate;
     private Date exbackDate;
     private Date acbackDate;
+    private int isAprove;
 
     public Date getAcbackDate() {
         return acbackDate;
@@ -38,6 +39,10 @@ public class leaveRecord {
 
     public String getStudentNo() {
         return studentNo;
+    }
+
+    public int getIsAprove() {
+        return isAprove;
     }
 
     public void setAcbackDate(Date acbackDate) {
@@ -68,4 +73,7 @@ public class leaveRecord {
         this.studentNo = studentNo;
     }
 
+    public void setIsAprove(int isAprove) {
+        this.isAprove = isAprove;
+    }
 }

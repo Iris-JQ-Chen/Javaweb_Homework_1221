@@ -88,6 +88,20 @@
             locale: moment.locale('zh-cn'),
             defaultDate: "2018-1-1"
         });
+        function confirmBack(id) {
+            var index = id[0];
+            alert(index);
+            $.post(
+                "http://localhost:8080/ConfirmBack",
+                {
+                    leaveId:id
+                },
+                function (data, status) {
+                    alert(data+status);
+                    window.location.href = "http://localhost:8080/HomeStudent.jsp"
+                }
+            );
+        }
     </script>
 </head>
 <body>
@@ -133,7 +147,7 @@
             <br><br>
             <ul class="nav nav-pills nav-stacked">
                 <li><button type="button" id="changePassword" class="btn btn-primary btn-lg btn-block">修改密码</button></li>
-                <br><br><br><br><br><br><br><br>
+                <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
             </ul><!-- nav nav-pills nav-stacked -->
             <hr class="hidden-sm hidden-md hidden-lg">
         </div><!-- col-sm-4 -->
@@ -201,28 +215,6 @@
                     <td><%=dormitoryManagerList.get(j).getManagerName()%></td>
                     <td><%=dormitoryManagerList.get(j).getBuildingNo()%></td>
                     <td><%=dormitoryManagerList.get(j).getManagerTel()%></td>
-                </tr>
-                <%}%>
-                </tbody>
-            </table>
-            <br>
-        </div><!-- col-sm-8 -->
-        <div class="col-sm-8">
-            <h2>离校记录</h2><br>
-            <table id="leave_record_table" class="table table-striped table-hover">
-                <thead>
-                <tr>
-                    <th>目的地</th><th>外出原因</th><th>出发时间</th><th>预计返回时间</th><th>实际返回时间</th>
-                </tr>
-                </thead>
-                <tbody id="leave_record_tbody">
-                <%for (int k = 0 ; k < leaveRecordList.size() ; k++){%>
-                <tr>
-                    <td><%=leaveRecordList.get(k).getPlace()%></td>
-                    <td><%=leaveRecordList.get(k).getReason()%></td>
-                    <td><%=leaveRecordList.get(k).getLeaveDate()%></td>
-                    <td><%=leaveRecordList.get(k).getExbackDate()%></td>
-                    <td><%=leaveRecordList.get(k).getAcbackDate()%></td>
                 </tr>
                 <%}%>
                 </tbody>
@@ -300,6 +292,46 @@
             </form>
             <br>
         </div><!-- col-sm-8 -->
+        <div class="col-sm-8">
+            <h2>离校记录</h2><br>
+            <table id="leave_record_table" class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>目的地</th><th>外出原因</th><th>出发时间</th><th>预计返回时间</th><th>实际返回时间</th><th>审核情况</th><th>返校操作</th>
+                </tr>
+                </thead>
+                <tbody id="leave_record_tbody">
+                <%for (int k = 0 ; k < leaveRecordList.size() ; k++){%>
+                <tr>
+                    <td><%=leaveRecordList.get(k).getPlace()%></td>
+                    <td><%=leaveRecordList.get(k).getReason()%></td>
+                    <td><%=leaveRecordList.get(k).getLeaveDate()%></td>
+                    <td><%=leaveRecordList.get(k).getExbackDate()%></td>
+
+                    <% if (leaveRecordList.get(k).getAcbackDate() == null) { %>
+                    <td>尚未返校</td>
+                    <% } else { %>
+                    <td><%=leaveRecordList.get(k).getAcbackDate()%></td>
+                    <% } %>
+
+                    <% if (leaveRecordList.get(k).getIsAprove() == 1) { %>
+                    <td>已通过审核</td>
+                    <% } else { %>
+                    <td>未审核</td>
+                    <% } %>
+
+                    <% if (leaveRecordList.get(k).getAcbackDate() != null) {%>
+                        <td>已返校</td>
+                    <% } else { %>
+                        <td><button type="button" onclick="confirmBack(this.id)" class="btn btn-info" id="<%=leaveRecordList.get(k).getLeaveId()%>">确认返校</button></td>
+                    <% } %>
+                </tr>
+                <%}%>
+                </tbody>
+            </table>
+            <br>
+        </div><!-- col-sm-8 -->
+
     </div><!-- row -->
 </div><!-- container -->
 

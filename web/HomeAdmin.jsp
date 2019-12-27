@@ -5,7 +5,9 @@
 <%@ page import="dao.DBStudentInfo" %>
 <%@ page import="java.util.LinkedList" %>
 <%@ page import="bean.dormitoryManager" %>
-<%@ page import="dao.DBDormitoryManager" %><%--
+<%@ page import="dao.DBDormitoryManager" %>
+<%@ page import="bean.leaveRecord" %>
+<%@ page import="dao.DBLeaveRecord" %><%--
   Created by IntelliJ IDEA.
   User: 蒲公英之流
   Date: 2019-12-22
@@ -49,6 +51,13 @@
     dormitoryManagerList = DBDormitoryManager.queryDormitoryManagerAll();
     if (dormitoryManagerList != null && !dormitoryManagerList.isEmpty()){
         dormitoryManagerLength = dormitoryManagerList.size();
+    } else {}
+
+    List<leaveRecord> leaveRecordNoApproveList = new LinkedList<>();
+    int leaveRecordNoApproveListLength = 0;
+    leaveRecordNoApproveList = DBLeaveRecord.queryLeaveRecordNoApprove();
+    if (leaveRecordNoApproveList != null && !leaveRecordNoApproveList.isEmpty()){
+        leaveRecordNoApproveListLength = dormitoryManagerList.size();
     } else {}
 
 %>
@@ -276,6 +285,19 @@
                         }
                         $("#showHygieneRecordDiv").show();
                     }
+                }
+            );
+        }
+        function approveLeave(id) {
+            $.post(
+                "http://localhost:8080/ApproveLeave",
+                {
+                    leaveId:id,
+                    isApprove:1
+                },
+                function (data,status) {
+                    alert(status);
+                    window.location.href = "http://localhost:8080/HomeAdmin.jsp";
                 }
             );
         }
@@ -535,6 +557,30 @@
                         <td id="<%=k+"d_manager_building_no"%>"><%=dormitoryManagerList.get(k).getBuildingNo()%></td>
                         <td id="<%=k+"d_manager_tel"%>"><%=dormitoryManagerList.get(k).getManagerTel()%></td>
                         <td><button type="button" onclick="changeDManagerInfo(this.id)" class="btn btn-info" id="<%=k+"changeDManagerInfo"%>">修改信息</button></td>
+                    </tr>
+                    <%}%>
+                    </tbody>
+                </table>
+            </div>
+            <br>
+        </div><!-- col-sm-8 -->
+        <div class="col-sm-8">
+            <h2>需要审批的离校申请</h2><br><br>
+            <div class="pre-scrollable" style="height: 280px; margin-top: -22px;">
+                <table id="need_approve_table" class="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>目的地</th><th>外出原因</th><th>出发时间</th><th>预计返回时间</th><th>是否批准</th>
+                    </tr>
+                    </thead>
+                    <tbody id="need_approve_tbody">
+                    <%for (int r = 0 ; r < leaveRecordNoApproveList.size() ; r++){%>
+                    <tr>
+                        <td><%=leaveRecordNoApproveList.get(r).getPlace()%></td>
+                        <td><%=leaveRecordNoApproveList.get(r).getReason()%></td>
+                        <td><%=leaveRecordNoApproveList.get(r).getLeaveDate()%></td>
+                        <td><%=leaveRecordNoApproveList.get(r).getExbackDate()%></td>
+                        <td><button type="button" onclick="approveLeave(this.id)" class="btn btn-info" id="<%=leaveRecordNoApproveList.get(r).getLeaveId()%>">批准</button></td>
                     </tr>
                     <%}%>
                     </tbody>
