@@ -68,8 +68,6 @@ public class DBBuilding {
         return list;
     }
 
-
-
     /*
     根据楼的NO查询单个宿舍楼的所有信息
      */

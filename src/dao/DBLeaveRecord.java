@@ -2,10 +2,7 @@ package dao;
 
 import bean.leaveRecord;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -45,4 +42,27 @@ public class DBLeaveRecord {
         return leaveRecordList;
     }
 
+    public static final Boolean addLeaveRecord(String studentNo, String place, String reason, Date leaveDate, Date exbackDate){
+        Connection connection = DBUtil.getConnection();
+        PreparedStatement preparedStatement = null;
+        String sql = "insert into LeaveRecord (studentNo,place,reason,leaveDate,exbackDate,isAprove) values (?,?,?,?,?,?)";
+
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,studentNo);
+            preparedStatement.setString(2,place);
+            preparedStatement.setString(3,reason);
+            preparedStatement.setDate(4,leaveDate);
+            preparedStatement.setDate(5,exbackDate);
+            preparedStatement.setInt(6,0);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            DBUtil.closeAll(null,preparedStatement,null,connection);
+        }
+
+        return true;
+    }
 }

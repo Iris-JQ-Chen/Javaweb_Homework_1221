@@ -39,10 +39,13 @@
 <head>
     <title>学生首页</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="jQuery/jquery-3.4.1.js"></script>
-    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
-    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/moment.js/2.22.0/moment-with-locales.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <style>
         .fakeimg {
@@ -64,7 +67,27 @@
                         });
                 }
             );
+            var picker1 = $('#leaveDate').datetimepicker({
+                format: 'YYYY-MM-DD',
+                locale: moment.locale('zh-cn'),
+                //minDate: '2016-7-1'
+            });
+            var picker2 = $('#leaveExbackDate').datetimepicker({
+                format: 'YYYY-MM-DD',
+                locale: moment.locale('zh-cn'),
+                //minDate: '2016-7-1'
+            });
         })
+        $('#leaveDate').datetimepicker({
+            format: 'YYYY-MM-DD',
+            locale: moment.locale('zh-cn'),
+            defaultDate: "2018-1-1"
+        });
+        $('#leaveExbackDate').datetimepicker({
+            format: 'YYYY-MM-DD',
+            locale: moment.locale('zh-cn'),
+            defaultDate: "2018-1-1"
+        });
     </script>
 </head>
 <body>
@@ -110,7 +133,7 @@
             <br><br>
             <ul class="nav nav-pills nav-stacked">
                 <li><button type="button" id="changePassword" class="btn btn-primary btn-lg btn-block">修改密码</button></li>
-                <br><br><br>
+                <br><br><br><br><br><br><br><br>
             </ul><!-- nav nav-pills nav-stacked -->
             <hr class="hidden-sm hidden-md hidden-lg">
         </div><!-- col-sm-4 -->
@@ -224,6 +247,57 @@
                 <%}%>
                 </tbody>
             </table>
+            <br>
+        </div><!-- col-sm-8 -->
+        <div id="applyForLeaveDiv" class="col-sm-8">
+            <h2>申请离校</h2><br>
+            <form class="form-horizontal" role="form" action="/ApplyForLeave" method="post">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">学号</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="leaveStudentNo" name="leaveStudentNo" value="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">目的地</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="leavePlace" name="leavePlace" value="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">外出原因</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="leaveReason" name="leaveReason" value="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">出发时间</label>
+                    <div class="col-sm-10">
+                        <div class='input-group date' style="width: 14em;" id='leaveDate'>
+                            <input type='text' class="timeInput form-control" name="leaveDate" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">预计返回时间</label>
+                    <div class="col-sm-10">
+                        <div class='input-group date' style="width: 14em;" id='leaveExbackDate'>
+                            <input type='text' class="timeInput form-control" name="leaveExbackDate" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar", id="A1"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-default">提交</button>
+                    </div>
+                </div>
+            </form>
             <br>
         </div><!-- col-sm-8 -->
     </div><!-- row -->
