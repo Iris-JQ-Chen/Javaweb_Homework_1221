@@ -60,6 +60,15 @@
         leaveRecordNoApproveListLength = dormitoryManagerList.size();
     } else {}
 
+    List<student> studentWithoutDormitoryList = new LinkedList<>();
+    int studentWithoutDormitoryListLength = 0;
+    studentWithoutDormitoryList = DBStudentInfo.queryStudentWithoutDormitory();
+    if (studentWithoutDormitoryList != null && !studentWithoutDormitoryList.isEmpty()){
+        studentWithoutDormitoryListLength = studentWithoutDormitoryList.size();
+    } else {}
+    for (int i = 0 ; i < studentWithoutDormitoryListLength ; i++){
+
+    }
 %>
 <html>
 <head>
@@ -83,6 +92,9 @@
             $("#changeDManagerInfoDiv").hide();
             $("#showLeaveRecordDiv").hide();
             $("#showHygieneRecordDiv").hide();
+            <% if (leaveRecordNoApproveListLength == 0) {%>
+            $("#needConfirmLeaveApprove").hide();
+            <% } %>
             $("#changePassword").click(
                 function () {
                     var newPwd = window.prompt("请输入新密码","");
@@ -301,6 +313,11 @@
                 }
             );
         }
+        function allotDormitory() {
+            for (var i = 0 ; i < <%= studentWithoutDormitoryListLength %> ; i++){
+
+            }
+        }
     </script>
 </head>
 <body>
@@ -353,7 +370,7 @@
                 <li><button type="button" id="changeAdminTel" class="btn btn-primary btn-lg btn-block">修改电话</button></li>
                 <br>
                 <li><button type="button" class="btn btn-primary btn-lg btn-block">按钮2</button></li>
-                <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
             </ul><!-- nav nav-pills nav-stacked -->
             <hr class="hidden-sm hidden-md hidden-lg">
         </div><!-- col-sm-4 -->
@@ -564,7 +581,7 @@
             </div>
             <br>
         </div><!-- col-sm-8 -->
-        <div class="col-sm-8">
+        <div id="needConfirmLeaveApprove" class="col-sm-8">
             <h2>需要审批的离校申请</h2><br><br>
             <div class="pre-scrollable" style="height: 280px; margin-top: -22px;">
                 <table id="need_approve_table" class="table table-striped table-hover">
@@ -682,6 +699,42 @@
                 </table>
             </div>
             <br>
+        </div><!-- col-sm-8 -->
+        <div class="col-sm-8">
+            <h2>需要分配宿舍的学生</h2><br><br>
+            <div class="pre-scrollable" style="height: 280px; margin-top: -22px;">
+                <table id="need_dormitory_table" class="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>学号</th><th>姓名</th><th>学院</th><th>性别</th>
+                    </tr>
+                    </thead>
+                    <tbody id="need_dormitory_tbody">
+                    <%for (int t = 0 ; t < studentWithoutDormitoryListLength ; t++){%>
+                    <tr>
+                        <td><%=studentWithoutDormitoryList.get(t).getStudentNo()%></td>
+                        <td><%=studentWithoutDormitoryList.get(t).getStudentName()%></td>
+                        <% if (studentWithoutDormitoryList.get(t).getInstituteNo() == 1) { %>
+                        <td>物联网工程学院</td>
+                        <% } else if (studentWithoutDormitoryList.get(t).getInstituteNo() == 2) { %>
+                        <td>企业管理学院</td>
+                        <% } else { %>
+                        <td>机电院</td>
+                        <% } %>
+                        <td><%=studentWithoutDormitoryList.get(t).getStudentSex()%></td>
+                        <%--<td><button type="button" onclick="Test(this.id)" class="btn btn-info" id="<%=studentWithoutDormitoryList.get(t).getStudentNo()%>">点击</button></td>--%>
+                        <td>
+                            <label class="radio-inline">
+                                <input type="radio" name="<%=studentWithoutDormitoryList.get(t).getStudentNo()%>" id="<%=studentWithoutDormitoryList.get(t).getStudentNo()%>" value="<%=studentWithoutDormitoryList.get(t).getStudentNo()%>" >
+                            </label>
+                        </td>
+                    </tr>
+                    <%}%>
+                    </tbody>
+                </table>
+            </div><br>
+            <button type="button" onclick="allotDormitory()" class="btn btn-info">批量分配宿舍</button>
+            <br><br>
         </div><!-- col-sm-8 -->
         <%--<div class="col-sm-8">--%>
             <%--<h2>标题</h2>--%>

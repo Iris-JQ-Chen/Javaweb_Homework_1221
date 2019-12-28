@@ -71,8 +71,12 @@ public class DBStudentInfo {
     }
 
     /*
-    根据宿舍
+    查询没有宿舍的所有学生的信息
      */
+    public static final List<student> queryStudentWithoutDormitory(){
+        String sql = "select * from StudentInfo where dormitoryNo is null";
+        return query(sql);
+    }
 
     /*
     根据学生姓名查询到这个学生的所有信息
