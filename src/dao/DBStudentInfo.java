@@ -13,6 +13,11 @@ public class DBStudentInfo {
         return change(sql);
     }
 
+    public static final Boolean changeStudentDormitoryNoByStudentNo(String studentNo, String dormitoryNo){
+        String sql = "update StudentInfo set dormitoryNo = '" + dormitoryNo + "' where studentNo = '" + studentNo +"'";
+        return change(sql);
+    }
+
     /*
     查询所有学生的信息
      */

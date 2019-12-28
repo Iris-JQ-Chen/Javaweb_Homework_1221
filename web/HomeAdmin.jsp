@@ -367,9 +367,9 @@
             <ul class="nav nav-pills nav-stacked">
                 <li><button type="button" id="changePassword" class="btn btn-primary btn-lg btn-block">修改密码</button></li>
                 <br>
-                <li><button type="button" id="changeAdminTel" class="btn btn-primary btn-lg btn-block">修改电话</button></li>
+                <%--<li><button type="button" id="changeAdminTel" class="btn btn-primary btn-lg btn-block">修改电话</button></li>--%>
                 <br>
-                <li><button type="button" class="btn btn-primary btn-lg btn-block">按钮2</button></li>
+                <%--<li><button type="button" class="btn btn-primary btn-lg btn-block">按钮2</button></li>--%>
                 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
             </ul><!-- nav nav-pills nav-stacked -->
             <hr class="hidden-sm hidden-md hidden-lg">
@@ -702,6 +702,7 @@
         </div><!-- col-sm-8 -->
         <div class="col-sm-8">
             <h2>需要分配宿舍的学生</h2><br><br>
+            <form action="/AllotDormitory" method="post">
             <div class="pre-scrollable" style="height: 280px; margin-top: -22px;">
                 <table id="need_dormitory_table" class="table table-striped table-hover">
                     <thead>
@@ -722,10 +723,9 @@
                         <td>机电院</td>
                         <% } %>
                         <td><%=studentWithoutDormitoryList.get(t).getStudentSex()%></td>
-                        <%--<td><button type="button" onclick="Test(this.id)" class="btn btn-info" id="<%=studentWithoutDormitoryList.get(t).getStudentNo()%>">点击</button></td>--%>
                         <td>
-                            <label class="radio-inline">
-                                <input type="radio" name="<%=studentWithoutDormitoryList.get(t).getStudentNo()%>" id="<%=studentWithoutDormitoryList.get(t).getStudentNo()%>" value="<%=studentWithoutDormitoryList.get(t).getStudentNo()%>" >
+                            <label class="checkbox-inline">
+                                <input type="checkbox" name="inputCheckbox" id="<%=studentWithoutDormitoryList.get(t).getStudentNo()%>" value="<%=studentWithoutDormitoryList.get(t).getStudentNo()%>" >
                             </label>
                         </td>
                     </tr>
@@ -733,7 +733,8 @@
                     </tbody>
                 </table>
             </div><br>
-            <button type="button" onclick="allotDormitory()" class="btn btn-info">批量分配宿舍</button>
+            <button type="submit" class="btn btn-info">批量分配宿舍</button>
+            </form>
             <br><br>
         </div><!-- col-sm-8 -->
         <%--<div class="col-sm-8">--%>

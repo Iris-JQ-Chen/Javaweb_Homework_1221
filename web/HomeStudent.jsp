@@ -201,7 +201,7 @@
             <br>
         </div><!-- col-sm-8 -->
         <div class="col-sm-8">
-            <h2>宿舍楼宿 · 管员信息</h2><br>
+            <h2>宿舍楼宿管员信息</h2><br>
             <table id="d_manager_table" class="table table-striped table-hover">
                 <thead>
                 <tr>
