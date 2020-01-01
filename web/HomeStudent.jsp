@@ -102,6 +102,17 @@
                 }
             );
         }
+        function myRetire(id) {
+            $.post(
+                "http://localhost:8080/RetireDormitory",
+                {
+                    studentNo: id,
+                },
+                function (data,status) {
+                    alert(data);
+                }
+            );
+        }
     </script>
 </head>
 <body>
@@ -147,6 +158,8 @@
             <br><br>
             <ul class="nav nav-pills nav-stacked">
                 <li><button type="button" id="changePassword" class="btn btn-primary btn-lg btn-block">修改密码</button></li>
+                <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
                 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
             </ul><!-- nav nav-pills nav-stacked -->
             <hr class="hidden-sm hidden-md hidden-lg">
@@ -331,7 +344,9 @@
             </table>
             <br>
         </div><!-- col-sm-8 -->
-
+        <div class="col-sm-8">
+            <button type="button" onclick="myRetire(this.id)" id="<%=userNo%>" class="btn btn-primary btn-lg btn-block">退宿</button>
+        </div>
     </div><!-- row -->
 </div><!-- container -->
 

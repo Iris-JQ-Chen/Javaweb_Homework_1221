@@ -2,10 +2,7 @@ package dao;
 
 import bean.dormitory;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -98,4 +95,52 @@ public class DBDormitory {
         return buildingNo;
     }
 
+
+    public static final Boolean retireDormitory(String studentNo, String number){
+        Connection connection = DBUtil.getConnection();
+        Statement statement1 = null;
+        Statement statement2 = null;
+        String sql1 = "update StudentInfo set dormitoryNo = null where studentNo = "+studentNo;
+        String sql2 = "update Dormitory set number = "+number;
+
+        try {
+            connection.setAutoCommit(false);
+
+            statement1 = connection.createStatement();
+            statement1.execute(sql1);
+
+            statement2 = connection.createStatement();
+            statement2.execute(sql2);
+
+            connection.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.closeAll(null,null,statement1,null);
+            DBUtil.closeAll(null,null,statement2,connection);
+        }
+
+        return true;
+    }
+
+    public static final int querydormitorynumberbystudentno(String studentNo){
+        Connection connection = DBUtil.getConnection();
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        String sql = "select number from Dormitory where dormitoryNo = (select dormitoryNo from StudentInfo where studentNo = ?)";
+        int number = -1;
+
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1,studentNo);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()){
+                number = new Integer(resultSet.getString("number"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return number;
+    }
 }
