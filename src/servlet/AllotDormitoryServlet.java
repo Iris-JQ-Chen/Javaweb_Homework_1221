@@ -24,7 +24,6 @@ public class AllotDormitoryServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
         response.setContentType("text/html;charset=utf-8");
-
         PrintWriter printWriter = response.getWriter();
 
         String[] chooses = request.getParameterValues("inputCheckbox");
@@ -36,7 +35,6 @@ public class AllotDormitoryServlet extends HttpServlet {
             response.sendRedirect(request.getContextPath()+"HomeAdmin.jsp");
         }
 
-        printWriter.print("doPost");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
