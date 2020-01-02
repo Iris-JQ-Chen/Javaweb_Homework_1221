@@ -196,28 +196,53 @@
             </div>
             <br>
         </div><!-- col-sm-8 -->
-        <div id="HygieneGradeDiv" class="col-sm-8">
-            <h2>卫生打分</h2><br>
-            <form class="form-horizontal" role="form" action="/HygieneGrade" method="post">
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">宿舍号</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="DormitoryNo" name="DormitoryNo" value="">
-                    </div>
+        <%--<div id="HygieneGradeDiv" class="col-sm-8">--%>
+            <%--<h2>卫生打分</h2><br>--%>
+            <%--<form class="form-horizontal" role="form" action="/HygieneGrade" method="post">--%>
+                <%--<div class="form-group">--%>
+                    <%--<label class="col-sm-2 control-label">宿舍号</label>--%>
+                    <%--<div class="col-sm-10">--%>
+                        <%--<input type="text" class="form-control" id="DormitoryNo" name="DormitoryNo" value="">--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+                <%--<div class="form-group">--%>
+                    <%--<label class="col-sm-2 control-label">分数</label>--%>
+                    <%--<div class="col-sm-10">--%>
+                        <%--<input type="text" class="form-control" id="HygieneGrade" name="HygieneGrade" value="">--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+                <%--<div class="form-group">--%>
+                    <%--<div class="col-sm-offset-2 col-sm-10">--%>
+                        <%--<button type="submit" class="btn btn-default">提交</button>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+            <%--</form>--%>
+            <%--<br>--%>
+        <%--</div><!-- col-sm-8 -->--%>
+        <div class="col-sm-8">
+            <h2>卫生评分</h2><br><br>
+            <form class="form-horizontal" role="form" method="post" action="/HygieneGrade">
+                <div class="pre-scrollable" style="height: 280px; margin-top: -22px;">
+                    <table id="hygiene_grade_table" class="table table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th>楼号</th><th>宿舍号</th><th>打分</th>
+                        </tr>
+                        </thead>
+                        <tbody id="hygiene_grade_tbody">
+                        <%for (int h = 0 ; h < dormitoryList.size() ; h++){%>
+                        <tr>
+                            <td><%=dormitoryList.get(h).getBuildingNo()%></td>
+                            <td><%=dormitoryList.get(h).getDormitoryNo()%></td>
+                            <td><input class="form-control" name="<%=dormitoryList.get(h).getDormitoryNo()%>" value=""></td>
+                        </tr>
+                        <%}%>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">分数</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="HygieneGrade" name="HygieneGrade" value="">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-default">提交</button>
-                    </div>
-                </div>
+                 <br>
+                <button class="btn btn-default" type="submit">打分</button>
             </form>
-            <br>
         </div><!-- col-sm-8 -->
     </div><!-- row -->
 </div><!-- container -->

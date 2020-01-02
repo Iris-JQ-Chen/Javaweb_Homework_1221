@@ -1,5 +1,7 @@
 package servlet;
 
+import bean.dormitory;
+import dao.DBDormitory;
 import dao.DBHygieneRecord;
 
 import javax.servlet.ServletException;
@@ -11,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
+import java.util.List;
 
 @WebServlet(name = "HygieneGradeServlet", urlPatterns = "/HygieneGrade")
 public class HygieneGradeServlet extends HttpServlet {
@@ -19,20 +22,29 @@ public class HygieneGradeServlet extends HttpServlet {
         response.setContentType("text/html;charset=utf-8");
         PrintWriter printWriter = response.getWriter();
 
-        String dormitoryNo = request.getParameter("DormitoryNo");
-        String hygieneGrade = request.getParameter("HygieneGrade");
-        String managerNo = new String();
-        String date = LocalDate.now().toString();
 
+        String userNo = new String();
         Cookie[] cookies = request.getCookies();
-        for (Cookie cookie : cookies){
-            if ("name".equalsIgnoreCase(cookie.getName())){
-                managerNo = cookie.getValue();
+        if (cookies != null){
+            for (Cookie cookie : cookies){
+                if ("name".equalsIgnoreCase(cookie.getName())) {
+                    if (!"".equalsIgnoreCase(cookie.getName())){
+                        userNo = cookie.getValue();
+                    }
+                }
             }
         }
+        List<dormitory> dormitoryList = DBDormitory.queryDormitoryByManagerNo(userNo);
 
-        DBHygieneRecord.addHygieneRecord(managerNo,dormitoryNo,hygieneGrade, date);
-        printWriter.print("doPost");
+        for (dormitory dormitory: dormitoryList){
+            printWriter.print(dormitory.getDormitoryNo());
+            String grade = request.getParameter(dormitory.getDormitoryNo());
+            if ("".equalsIgnoreCase(grade)){
+            } else {
+                String date = LocalDate.now().toString();
+                DBHygieneRecord.addHygieneRecord(userNo,dormitory.getDormitoryNo(),grade , date);
+            }
+        }
 
         response.sendRedirect(request.getContextPath()+"/HomeDManager.jsp");
     }
