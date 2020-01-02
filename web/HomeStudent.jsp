@@ -110,6 +110,7 @@
                 },
                 function (data,status) {
                     alert(data);
+                    window.location.href = "http://localhost:HomeStudent.jsp"; 
                 }
             );
         }
