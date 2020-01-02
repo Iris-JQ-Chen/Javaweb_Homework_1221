@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @WebServlet(name = "HygieneGradeServlet", urlPatterns = "/HygieneGrade")
 public class HygieneGradeServlet extends HttpServlet {
@@ -21,7 +23,7 @@ public class HygieneGradeServlet extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         response.setContentType("text/html;charset=utf-8");
         PrintWriter printWriter = response.getWriter();
-
+        String h = "0;/HomeDManager.jsp";
 
         String userNo = new String();
         Cookie[] cookies = request.getCookies();
@@ -37,16 +39,27 @@ public class HygieneGradeServlet extends HttpServlet {
         List<dormitory> dormitoryList = DBDormitory.queryDormitoryByManagerNo(userNo);
 
         for (dormitory dormitory: dormitoryList){
-            printWriter.print(dormitory.getDormitoryNo());
             String grade = request.getParameter(dormitory.getDormitoryNo());
             if ("".equalsIgnoreCase(grade)){
+            } else if (isNumeric(grade)){
+                int gradeInt = new Integer(grade);
+                if (gradeInt<0 || gradeInt >100){
+                    printWriter.println("打分失败");
+                    h = "3;/HomeDManager.jsp";
+                    break;
+                } else {
+                    String date = LocalDate.now().toString();
+                    DBHygieneRecord.addHygieneRecord(userNo,dormitory.getDormitoryNo(), grade, date);
+                }
             } else {
-                String date = LocalDate.now().toString();
-                DBHygieneRecord.addHygieneRecord(userNo,dormitory.getDormitoryNo(),grade , date);
+                printWriter.println("打分失败");
+                h = "3;/HomeDManager.jsp";
+                break;
             }
         }
 
-        response.sendRedirect(request.getContextPath()+"/HomeDManager.jsp");
+//        response.sendRedirect(redirectPath);
+        response.setHeader("refresh", h);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -55,5 +68,15 @@ public class HygieneGradeServlet extends HttpServlet {
         PrintWriter printWriter = response.getWriter();
 
         printWriter.print("doPost");
+    }
+
+    public boolean isNumeric(String str) {
+        Pattern pattern = Pattern.compile("^-?[0-9]+"); //这个也行
+//        Pattern pattern = Pattern.compile("^-?\\d+(\\.\\d+)?$");//这个也行
+        Matcher isNum = pattern.matcher(str);
+        if (!isNum.matches()) {
+            return false;
+        }
+        return true;
     }
 }

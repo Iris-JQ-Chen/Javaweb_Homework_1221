@@ -196,29 +196,6 @@
             </div>
             <br>
         </div><!-- col-sm-8 -->
-        <%--<div id="HygieneGradeDiv" class="col-sm-8">--%>
-            <%--<h2>卫生打分</h2><br>--%>
-            <%--<form class="form-horizontal" role="form" action="/HygieneGrade" method="post">--%>
-                <%--<div class="form-group">--%>
-                    <%--<label class="col-sm-2 control-label">宿舍号</label>--%>
-                    <%--<div class="col-sm-10">--%>
-                        <%--<input type="text" class="form-control" id="DormitoryNo" name="DormitoryNo" value="">--%>
-                    <%--</div>--%>
-                <%--</div>--%>
-                <%--<div class="form-group">--%>
-                    <%--<label class="col-sm-2 control-label">分数</label>--%>
-                    <%--<div class="col-sm-10">--%>
-                        <%--<input type="text" class="form-control" id="HygieneGrade" name="HygieneGrade" value="">--%>
-                    <%--</div>--%>
-                <%--</div>--%>
-                <%--<div class="form-group">--%>
-                    <%--<div class="col-sm-offset-2 col-sm-10">--%>
-                        <%--<button type="submit" class="btn btn-default">提交</button>--%>
-                    <%--</div>--%>
-                <%--</div>--%>
-            <%--</form>--%>
-            <%--<br>--%>
-        <%--</div><!-- col-sm-8 -->--%>
         <div class="col-sm-8">
             <h2>卫生评分</h2><br><br>
             <form class="form-horizontal" role="form" method="post" action="/HygieneGrade">
