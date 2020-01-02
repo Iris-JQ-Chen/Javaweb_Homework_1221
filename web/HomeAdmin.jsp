@@ -528,7 +528,12 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">学院</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="changeInstituteName" name="changeInstituteName" value="">
+                        <%--<input type="text" class="form-control" id="changeInstituteName" name="changeInstituteName" value="">--%>
+                        <select class="form-control" name="changeInstituteName" id="changeInstituteName">
+                            <option value="物联网工程学院">物联网工程学院</option>
+                            <option value="企业管理学院">企业管理学院</option>
+                            <option value="机电院">机电院</option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
