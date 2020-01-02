@@ -36,7 +36,7 @@ public class StudentServlet extends HttpServlet {
 
         if (DBStudentInfo.changeStudentInfoByStudentNo(studentNo,iNo,dormitoryNo,studentTel)){
             printWriter.println("success");
-            response.sendRedirect(request.getContextPath()+"/HomeAdmin.jsp");
+            response.sendRedirect(request.getContextPath()+"/HomeAdmin.jsp?changeStudentInfo=true");
         } else {
             printWriter.println("failure");
             response.sendRedirect(request.getContextPath()+"/HomeAdmin.jsp?changeStudentInfo=false");

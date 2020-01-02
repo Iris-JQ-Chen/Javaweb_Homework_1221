@@ -592,12 +592,13 @@
                 <table id="need_approve_table" class="table table-striped table-hover">
                     <thead>
                     <tr>
-                        <th>目的地</th><th>外出原因</th><th>出发时间</th><th>预计返回时间</th><th>是否批准</th>
+                        <th>学号</th><th>目的地</th><th>外出原因</th><th>出发时间</th><th>预计返回时间</th><th>是否批准</th>
                     </tr>
                     </thead>
                     <tbody id="need_approve_tbody">
                     <%for (int r = 0 ; r < leaveRecordNoApproveList.size() ; r++){%>
                     <tr>
+                        <td><%=leaveRecordNoApproveList.get(r).getStudentNo()%></td>
                         <td><%=leaveRecordNoApproveList.get(r).getPlace()%></td>
                         <td><%=leaveRecordNoApproveList.get(r).getReason()%></td>
                         <td><%=leaveRecordNoApproveList.get(r).getLeaveDate()%></td>
