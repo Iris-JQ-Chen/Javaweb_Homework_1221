@@ -1,9 +1,12 @@
 package servlet;
 
+import bean.dormitoryManager;
+import bean.student;
 import dao.DBLeaveRecord;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,7 +23,19 @@ public class ApplyForLeaveServlet extends HttpServlet {
         response.setContentType("text/html;charset=utf-8");
         PrintWriter printWriter = response.getWriter();
 
-        String studentNo = request.getParameter("leaveStudentNo");
+        String userNo = new String();
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null){
+            for (Cookie cookie : cookies){
+                if ("name".equalsIgnoreCase(cookie.getName())) {
+                    if (!"".equalsIgnoreCase(cookie.getName())){
+                        userNo = cookie.getValue();
+                    }
+                }
+            }
+        }
+
+        String studentNo = userNo;
         String leavePlace = request.getParameter("leavePlace");
         String leaveReason = request.getParameter("leaveReason");
         String leaveS = request.getParameter("leaveDate");

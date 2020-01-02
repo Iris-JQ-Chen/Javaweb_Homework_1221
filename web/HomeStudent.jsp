@@ -258,12 +258,12 @@
         <div id="applyForLeaveDiv" class="col-sm-8">
             <h2>申请离校</h2><br>
             <form class="form-horizontal" role="form" action="/ApplyForLeave" method="post">
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">学号</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="leaveStudentNo" name="leaveStudentNo" value="">
-                    </div>
-                </div>
+                <%--<div class="form-group">--%>
+                    <%--<label class="col-sm-2 control-label">学号</label>--%>
+                    <%--<div class="col-sm-10">--%>
+                        <%--<input type="text" class="form-control" id="leaveStudentNo" name="leaveStudentNo" value="<%=userNo%>">--%>
+                    <%--</div>--%>
+                <%--</div>--%>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">目的地</label>
                     <div class="col-sm-10">
